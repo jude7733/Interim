@@ -2,7 +2,7 @@ import { Command } from "@tauri-apps/api/shell";
 import { useState } from "react";
 import "./App.css";
 import { Button } from "@/components/ui/button";
-import { ModeToggle } from "./components/mode-toggle";
+import SideMenu from "./components/ui/side-menu";
 
 function App() {
   const [output, setOutput] = useState();
@@ -24,9 +24,9 @@ function App() {
 
   return (
     <div className="bg-background text-foreground">
-      <ModeToggle />
-      <h1>Interim</h1>
-      <Button onClick={update}>update</Button>
+      <div className="flex flex-row justify-between items-center p-4">
+        <SideMenu />
+      </div>
       <div>
         <p>{output}</p>
       </div>
