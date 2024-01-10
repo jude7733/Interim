@@ -1,8 +1,7 @@
 import { Command } from "@tauri-apps/api/shell";
 import { useState } from "react";
 import "./App.css";
-import { Button } from "@/components/ui/button";
-import SideMenu from "./components/ui/side-menu";
+import SideMenu from "./components/side-menu";
 
 function App() {
   const [output, setOutput] = useState();
@@ -23,13 +22,8 @@ function App() {
   };
 
   return (
-    <div className="bg-background text-foreground">
-      <div className="flex flex-row justify-between items-center p-4">
+    <div className="bg-background flex text-foreground border rounded-md">
         <SideMenu />
-      </div>
-      <div>
-        <p>{output}</p>
-      </div>
     </div>
   );
 }
