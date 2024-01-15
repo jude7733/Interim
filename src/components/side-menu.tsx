@@ -1,4 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Categories from "./categories";
 
 const SideMenu = () => {
   return (
@@ -14,7 +15,7 @@ const SideMenu = () => {
           </TabsTrigger>
         </TabsList>
         <TabsList className="m-1">
-          <TabsTrigger value="Categories">Categories</TabsTrigger>
+          <TabsTrigger value="categories">Categories</TabsTrigger>
         </TabsList>
         <TabsList className="m-1">
           <TabsTrigger value="settings">
@@ -35,6 +36,9 @@ const SideMenu = () => {
       <div className="flex flex-1 grow border rounded-md m-1">
         <TabsContent value="backup">
           <p className="m-3">Backup</p>
+        </TabsContent>
+        <TabsContent value="categories">
+          <Categories />
         </TabsContent>
       </div>
     </Tabs>
