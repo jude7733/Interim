@@ -33,11 +33,8 @@ const SideMenu = () => {
           </TabsTrigger>
         </TabsList>
       </div>
-      <div className="flex flex-1 grow border rounded-md m-1">
-        <TabsContent value="backup">
-          <p className="m-3">Backup</p>
-        </TabsContent>
-        <TabsContent value="categories">
+      <div className="flex grow border rounded-md m-1">
+        <TabsContent value="categories" className="flex grow">
           <Categories />
         </TabsContent>
       </div>
