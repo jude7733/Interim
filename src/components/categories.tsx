@@ -1,5 +1,6 @@
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Card, CardContent } from "@/components/ui/card";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
   CarouselContent,
@@ -27,7 +28,18 @@ const Categories = () => {
       <div>
         <Label className="text-2xl">Categories</Label>
       </div>
-      <Carousel className="m-5 w-full max-w-56">
+      <Carousel
+        className="m-5 w-full max-w-56"
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+        plugins={[
+          Autoplay({
+            delay: 3000,
+          }),
+        ]}
+      >
         <Card>
           <CarouselContent>
             {items.map((item, index) => {
