@@ -10,17 +10,15 @@ import { Button } from "./ui/button";
 
 const OptionMenu = () => {
   return (
-    <div className="mr-3">
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger>
           <Button variant="outline">Options</Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent align="end">
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
   );
 };
 
@@ -30,7 +28,7 @@ const TopBar = () => {
       <Avatar className="w-9 mr-4">
         <AvatarImage src="./hacker.png" />
       </Avatar>
-      <div className="flex items-center">
+      <div className="flex items-center gap-1">
         <OptionMenu />
         <ModeToggle />
       </div>

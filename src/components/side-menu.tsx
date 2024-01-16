@@ -19,7 +19,7 @@ const SideMenu = () => {
         </TabsList>
         <TabsList className="m-1">
           <TabsTrigger value="settings">
-            &nbsp;&nbsp;Settings &nbsp;
+            &nbsp;Settings &nbsp;
           </TabsTrigger>
         </TabsList>
         <TabsList className="m-1">
