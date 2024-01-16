@@ -29,7 +29,7 @@ const Categories = () => {
         <Label className="text-2xl">Categories</Label>
       </div>
       <Carousel
-        className="m-5 w-full max-w-56"
+        className="m-5 w-full max-w-48"
         opts={{
           align: "start",
           loop: true,
