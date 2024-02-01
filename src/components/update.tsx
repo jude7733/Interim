@@ -6,7 +6,7 @@ import { useState } from "react";
 const Update = () => {
   const [output, setOutput] = useState();
   const update = async () => {
-    const command = new Command("update", ["install", "Audacity.Audacity"]);
+    const command = new Command("update", ["upgrade", "-h", "--all"]);
     command.on("close", (data) => {
       setOutput(data.signal);
     });

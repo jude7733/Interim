@@ -20,8 +20,8 @@
         "scope": [
           {
             "name": "update",
-            "cmd": "pkexec",
-            "args": ["dnf", "update"]
+            "cmd": "winget",
+            "args": ["upgrade", "-h", "--all"]
           }
         ]
       }
