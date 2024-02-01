@@ -21,7 +21,7 @@ const Update = () => {
     await command.execute();
   };
   return (
-    <div>
+    <div className="flex align-middle justify-center">
       <Button onClick={update}>
         Update &nbsp;&nbsp;
         <UpdateIcon />

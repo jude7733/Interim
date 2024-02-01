@@ -1,6 +1,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Categories from "./categories";
 import Update from "./update";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 
 const SideMenu = () => {
   return (
@@ -37,14 +42,27 @@ const SideMenu = () => {
           </TabsTrigger>
         </TabsList>
       </div>
-      <div className="flex grow border rounded-md m-1">
-        <TabsContent value="categories" className="flex grow">
-          <Categories />
-        </TabsContent>
-        <TabsContent value="update" className="flex grow">
-          <Update />
-        </TabsContent>
-      </div>
+      <ResizablePanelGroup
+        direction="vertical"
+        className="rounded-md border"
+      >
+        <ResizablePanel defaultSize={75}>
+          <div className="flex grow border rounded-md m-1 h-full">
+            <TabsContent value="categories" className="flex grow">
+              <Categories />
+            </TabsContent>
+            <TabsContent value="update" className="flex grow">
+              <Update />
+            </TabsContent>
+          </div>
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={25}>
+          <div className="flex h-full items-center justify-center p-6">
+            <span className="font-semibold">Terminal</span>
+          </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
     </Tabs>
   );
 };
