@@ -6,6 +6,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { Terminal } from "./terminal";
 
 const SideMenu = () => {
   return (
@@ -55,8 +56,8 @@ const SideMenu = () => {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={25}>
-          <div className="flex h-full items-center justify-center p-6">
-            <span className="font-semibold">Terminal</span>
+          <div className="flex h-full items-center justify-center p-1">
+            <Terminal />
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>

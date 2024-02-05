@@ -24,7 +24,7 @@ const OptionMenu = () => {
 
 const TopBar = () => {
   return (
-    <div className="flex p-1 justify-between">
+    <div className="bg-neutral-900 flex p-1 justify-between">
       <Avatar className="w-9 mr-4">
         <AvatarImage src="./hacker.png" />
       </Avatar>

@@ -21,7 +21,7 @@
           {
             "name": "update",
             "cmd": "winget",
-            "args": ["upgrade", "-h", "--all"]
+            "args": ["upgrade", "-h", "--all", "--include-unknown"]
           }
         ]
       }
