@@ -24,7 +24,7 @@ const items = [
 ];
 const Categories = () => {
   return (
-    <div className="flex flex-col grow items-center justify-start m-1 p-1">
+    <div className="flex flex-col grow items-center justify-start m-1 p-1 w-full">
       <div>
         <Label className="text-2xl">Categories</Label>
       </div>

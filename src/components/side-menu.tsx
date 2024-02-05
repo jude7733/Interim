@@ -42,16 +42,13 @@ const SideMenu = () => {
           </TabsTrigger>
         </TabsList>
       </div>
-      <ResizablePanelGroup
-        direction="vertical"
-        className="rounded-md border"
-      >
+      <ResizablePanelGroup direction="vertical" className="rounded-md border">
         <ResizablePanel defaultSize={75}>
-          <div className="flex grow border rounded-md m-1 h-full">
-            <TabsContent value="categories" className="flex grow">
+          <div className="flex grow border rounded-md m-1 h-full w-full">
+            <TabsContent value="categories" className="grow">
               <Categories />
             </TabsContent>
-            <TabsContent value="update" className="flex grow">
+            <TabsContent value="update" className="grow">
               <Update />
             </TabsContent>
           </div>
