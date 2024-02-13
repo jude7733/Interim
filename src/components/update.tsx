@@ -1,5 +1,5 @@
-import { useDispatch } from "react-redux";
-import { addLog } from "../redux/state/logSlice";
+import { useAppDispatch} from "@/app/hooks";
+import { addLog } from "../features/logSlice";
 import { UpdateIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { Command } from "@tauri-apps/api/shell";
@@ -7,8 +7,8 @@ import { Command } from "@tauri-apps/api/shell";
 // const regex = /^\\b (?!_)/;
 
 const Update = () => {
-    const dispatch = useDispatch();
-
+  const dispatch = useAppDispatch();
+  
   const update = async () => {
     const command = new Command("update", [
       "upgrade",
@@ -23,9 +23,7 @@ const Update = () => {
     command.stdout.on("data", (line) =>
       console.log(`command stdout: "${line}"`)
     );
-    command.stdout.on("data", (line) =>
-      dispatch(addLog())
-    );
+    command.stdout.on("data", (line) => dispatch(addLog(line)));
     command.stderr.on("data", (line) =>
       console.log(`command stderr: "${line}"`)
     );
