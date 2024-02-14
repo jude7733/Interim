@@ -45,7 +45,7 @@ const SideMenu = () => {
       </div>
       <ResizablePanelGroup direction="vertical" className="rounded-md border">
         <ResizablePanel defaultSize={75}>
-          <div className="flex grow border rounded-md m-1 h-full w-full">
+          <div className="flex grow m-1 h-full w-full">
             <TabsContent value="categories" className="grow">
               <Categories />
             </TabsContent>

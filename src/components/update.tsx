@@ -1,4 +1,4 @@
-import { useAppDispatch} from "@/app/hooks";
+import { useAppDispatch } from "@/app/hooks";
 import { addLog } from "../features/logSlice";
 import { UpdateIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
@@ -8,7 +8,7 @@ import { Command } from "@tauri-apps/api/shell";
 
 const Update = () => {
   const dispatch = useAppDispatch();
-  
+
   const update = async () => {
     const command = new Command("update", [
       "upgrade",
@@ -30,7 +30,7 @@ const Update = () => {
     await command.execute();
   };
   return (
-    <div className="flex align-middle justify-center">
+    <div className="flex items-center justify-center h-full w-full">
       <Button onClick={update}>
         Update &nbsp;&nbsp;
         <UpdateIcon />

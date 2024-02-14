@@ -10,21 +10,21 @@ import { Button } from "./ui/button";
 
 const OptionMenu = () => {
   return (
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Button variant="outline">Options</Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Button variant="outline">Options</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <DropdownMenuItem>Settings</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
 const TopBar = () => {
   return (
-    <div className="bg-neutral-900 flex p-1 justify-between">
+    <div className="bg-secondary flex p-1 justify-between">
       <Avatar className="w-9 mr-4">
         <AvatarImage src="./hacker.png" />
       </Avatar>
