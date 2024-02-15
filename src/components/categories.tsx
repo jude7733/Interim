@@ -30,17 +30,17 @@ import { Head } from "./ui/head";
 
 const CarouselComponent = () => {
   const items = {
-    Dev: () => <TerminalSquare />,
-    Games: () => <Gamepad />,
-    Graphics: () => <Paintbrush />,
-    Internet: () => <ArrowDownUp />,
-    Multimedia: () => <MonitorPlay />,
-    Office: () => <Files />,
-    System: () => <Sliders />,
+    Dev: () => <TerminalSquare size={40} color="yellow" />,
+    Games: () => <Gamepad size={40} color="yellow" />,
+    Graphics: () => <Paintbrush size={40} color="yellow" />,
+    Internet: () => <ArrowDownUp size={40} color="yellow" />,
+    Multimedia: () => <MonitorPlay size={40} color="yellow" />,
+    Office: () => <Files size={40} color="yellow" />,
+    System: () => <Sliders size={40} color="yellow" />,
   };
   return (
     <Carousel
-      className="md:max-w-64 lg:max-w-96"
+      className="w-[70%]"
       opts={{
         align: "start",
         loop: true,
@@ -55,9 +55,9 @@ const CarouselComponent = () => {
         <CarouselContent>
           {Object.keys(items).map((key: string, index: number) => {
             return (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2">
+              <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
                 <Card key={index}>
-                  <CardContent className="flex flex-col gap-2 aspect-square items-center justify-center border-2 border-yellow-500 rounded-md">
+                  <CardContent className="flex flex-col gap-2 p-2 aspect-square items-center justify-center border border-yellow-500 rounded-md">
                     {items[key]()}
                     <Label className="text-foreground">{key}</Label>
                   </CardContent>
@@ -80,8 +80,8 @@ const CategoryCard = ({ title }: { title: string }) => {
         <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardFooter>
-        <Button size="icon">
-          <Download />
+        <Button variant="link" size="icon">
+          <Download size={40} />
         </Button>
       </CardFooter>
     </Card>
@@ -92,8 +92,8 @@ const Categories = () => {
   return (
     <ScrollArea className="w-full h-full flex flex-col items-center justify-start p-2">
       <Head title="Categories" />
-      <div className="flex items-start justify-center w-full h-full flex-wrap gap-3 py-5">
-        <div className="mx-14">
+      <div className="flex items-start justify-center w-full h-full flex-wrap gap-5">
+        <div className="w-full flex items-start justify-center py-5 mx-3 border-b rounded-xl border-b-yellow-900">
           <CarouselComponent />
         </div>
         <CategoryCard title="Python" />
