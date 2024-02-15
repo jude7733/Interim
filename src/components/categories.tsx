@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "./ui/button";
+import { Head } from "./ui/head";
 
 const CarouselComponent = () => {
   const items = {
@@ -52,7 +53,7 @@ const CarouselComponent = () => {
     >
       <Card>
         <CarouselContent>
-          {Object.keys(items).map((key: string, index) => {
+          {Object.keys(items).map((key: string, index: number) => {
             return (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2">
                 <Card key={index}>
@@ -90,9 +91,7 @@ const CategoryCard = ({ title }: { title: string }) => {
 const Categories = () => {
   return (
     <ScrollArea className="w-full h-full flex flex-col items-center justify-start p-2">
-      <div className="mb-4 p-2 rounded-lg w-fit border-b-yellow-400 border-b-2">
-        <Label className="text-2xl">Categories</Label>
-      </div>
+      <Head title="Categories" />
       <div className="flex items-start justify-center w-full h-full flex-wrap gap-3 py-5">
         <div className="mx-14">
           <CarouselComponent />

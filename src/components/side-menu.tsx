@@ -7,6 +7,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { Terminal } from "./terminal";
+import Backup from "./backup";
 
 const SideMenu = () => {
   return (
@@ -46,6 +47,9 @@ const SideMenu = () => {
       <ResizablePanelGroup direction="vertical" className="rounded-md border">
         <ResizablePanel defaultSize={75}>
           <div className="flex grow m-1 h-full w-full">
+            <TabsContent value="backup" className="grow">
+             <Backup />
+            </TabsContent>
             <TabsContent value="categories" className="grow">
               <Categories />
             </TabsContent>

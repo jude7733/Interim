@@ -3,6 +3,7 @@ import { addLog } from "../features/logSlice";
 import { UpdateIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { Command } from "@tauri-apps/api/shell";
+import { Head } from "./ui/head";
 
 // const regex = /^\\b (?!_)/;
 
@@ -30,11 +31,14 @@ const Update = () => {
     await command.execute();
   };
   return (
-    <div className="flex items-center justify-center h-full w-full">
-      <Button onClick={update}>
-        Update &nbsp;&nbsp;
-        <UpdateIcon />
-      </Button>
+    <div className="flex items-start flex-col justify-start h-full w-full">
+      <Head title="Update" />
+      <div className="flex w-full h-full justify-center items-center">
+        <Button onClick={update}>
+          Update &nbsp;&nbsp;
+          <UpdateIcon />
+        </Button>
+      </div>
     </div>
   );
 };
