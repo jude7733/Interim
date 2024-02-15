@@ -40,8 +40,8 @@ const Update = () => {
           className="w-40 h-40 flex-col gap-5"
           variant="outline"
         >
-          <Label className="text-xl text-yellow-100">Update System</Label>
-          <MonitorDown size={50} color="lime" />
+          <Label className="text-xl text-foreground">Update System</Label>
+          <MonitorDown size={50} color="yellow" />
         </Button>
       </div>
     </div>

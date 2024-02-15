@@ -1,5 +1,4 @@
 import * as React from "react"
-import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons"
 import useEmblaCarousel, {
   type EmblaCarouselType as CarouselApi,
   type EmblaOptionsType as CarouselOptions,
@@ -8,6 +7,7 @@ import useEmblaCarousel, {
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
 
 type CarouselProps = {
   opts?: CarouselOptions

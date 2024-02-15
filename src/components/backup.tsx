@@ -13,16 +13,16 @@ const Backup = () => {
           variant="outline"
           className="w-40 h-40 flex-col gap-8"
         >
-          <Label className="text-xl text-yellow-100">Import</Label>
-          <FolderInput size={50} color="lime" />
+          <Label className="text-xl text-card-foreground">Import</Label>
+          <FolderInput size={50} color="yellow" />
         </Button>
         <Button
           size="lg"
           variant="outline"
           className="w-40 h-40 flex-col gap-8"
         >
-          <Label className="text-xl text-yellow-100">Export</Label>
-          <FolderOutput size={50} color="lime" />
+          <Label className="text-xl text-card-foreground">Export</Label>
+          <FolderOutput size={50} color="yellow" />
         </Button>
       </div>
     </div>
