@@ -39,7 +39,7 @@ const CarouselComponent = () => {
   };
   return (
     <Carousel
-      className="max-w-36"
+      className="max-w-80"
       opts={{
         align: "start",
         loop: true,
@@ -52,9 +52,9 @@ const CarouselComponent = () => {
     >
       <Card>
         <CarouselContent>
-          {Object.keys(items).map((key, index) => {
+          {Object.keys(items).map((key: string, index) => {
             return (
-              <CarouselItem key={index}>
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2">
                 <Card key={index}>
                   <CardContent className="flex flex-col gap-2 aspect-square items-center justify-center border-2 border-yellow-800 rounded-md">
                     {items[key]()}
@@ -89,7 +89,7 @@ const CategoryCard = ({ title }: { title: string }) => {
 
 const Categories = () => {
   return (
-    <ScrollArea className="w-full h-full flex flex-col items-center justify-start m-1">
+    <ScrollArea className="w-full h-full flex flex-col items-center justify-start p-2">
       <div className="mb-4 p-2 rounded-lg w-fit border-b-yellow-400 border-b-2">
         <Label className="text-2xl">Categories</Label>
       </div>
