@@ -39,7 +39,7 @@ const CarouselComponent = () => {
   };
   return (
     <Carousel
-      className="max-w-80"
+      className="md:max-w-64 lg:max-w-96"
       opts={{
         align: "start",
         loop: true,
