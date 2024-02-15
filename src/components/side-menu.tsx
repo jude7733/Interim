@@ -34,11 +34,6 @@ const SideMenu = () => {
           <TabsTrigger value="settings">&nbsp;Settings &nbsp;</TabsTrigger>
         </TabsList>
         <TabsList>
-          <TabsTrigger value="about">
-            &nbsp;&nbsp;&nbsp;About &nbsp;&nbsp;&nbsp;
-          </TabsTrigger>
-        </TabsList>
-        <TabsList>
           <TabsTrigger value="exit">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </TabsTrigger>
@@ -48,7 +43,7 @@ const SideMenu = () => {
         <ResizablePanel defaultSize={75}>
           <div className="flex grow m-1 h-full w-full">
             <TabsContent value="backup" className="grow">
-             <Backup />
+              <Backup />
             </TabsContent>
             <TabsContent value="categories" className="grow">
               <Categories />

@@ -57,7 +57,7 @@ const CarouselComponent = () => {
             return (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2">
                 <Card key={index}>
-                  <CardContent className="flex flex-col gap-2 aspect-square items-center justify-center border-2 border-yellow-800 rounded-md">
+                  <CardContent className="flex flex-col gap-2 aspect-square items-center justify-center border-2 border-yellow-500 rounded-md">
                     {items[key]()}
                     <Label className="text-foreground">{key}</Label>
                   </CardContent>

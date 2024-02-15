@@ -1,7 +1,7 @@
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Button } from "./ui/button";
 import { Head } from "./ui/head";
-import { FolderDown, FolderInput, FolderOutput, Upload } from "lucide-react";
+import { FolderInput, FolderOutput } from "lucide-react";
 
 const Backup = () => {
   return (
@@ -13,7 +13,7 @@ const Backup = () => {
           variant="outline"
           className="w-40 h-40 flex-col gap-8"
         >
-          <Label className="text-2xl text-yellow-100">Import</Label>
+          <Label className="text-xl text-yellow-100">Import</Label>
           <FolderInput size={50} color="lime" />
         </Button>
         <Button
@@ -21,7 +21,7 @@ const Backup = () => {
           variant="outline"
           className="w-40 h-40 flex-col gap-8"
         >
-          <Label className="text-2xl text-yellow-100">Export</Label>
+          <Label className="text-xl text-yellow-100">Export</Label>
           <FolderOutput size={50} color="lime" />
         </Button>
       </div>
