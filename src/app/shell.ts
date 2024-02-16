@@ -1,4 +1,5 @@
 import { addLog } from "@/features/logSlice";
+import { setLock } from "@/features/lockSlice";
 import { Command } from "@tauri-apps/api/shell";
 
 export const updateSystem = async (dispatch) => {
@@ -13,9 +14,10 @@ export const updateSystem = async (dispatch) => {
   // });
   command.on("error", (error) => console.error(`command error: "${error}"`));
   command.stdout.on("data", (line) => console.log(`command stdout: "${line}"`));
-  command.stdout.on("data", (line) =>
-    dispatch(addLog(line.length > 5 ? line : ""))
-  );
+  command.stdout.on("data", (line) => {
+    dispatch(addLog(line.length > 8 ? line : ""));
+    dispatch(setLock());
+  });
   command.stderr.on("data", (line) => console.log(`command stderr: "${line}"`));
-  await command.execute();
+  await command.execute().then(() => setLock());
 };
