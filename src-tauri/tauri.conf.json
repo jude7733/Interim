@@ -20,8 +20,8 @@
         "scope": [
           {
             "name": "update",
-            "cmd": "winget",
-            "args": ["upgrade", "-h", "--all", "--include-unknown"]
+            "cmd": "pkexec",
+            "args": ["apt", "update"]
           }
         ]
       }
@@ -41,7 +41,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.interim.dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

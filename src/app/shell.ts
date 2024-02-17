@@ -2,13 +2,8 @@ import { addLog } from "@/features/logSlice";
 import { setLock } from "@/features/lockSlice";
 import { Command } from "@tauri-apps/api/shell";
 
-export const updateSystem = async (dispatch) => {
-  const command = new Command("update", [
-    "upgrade",
-    "-h",
-    "--all",
-    "--include-unknown",
-  ]);
+export const updateSystem = async (dispatch: any) => {
+  const command = new Command("update", ["apt", "update"]);
   // command.on("close", (data) => {
   //   setOutput(output + data.signal);
   // });
