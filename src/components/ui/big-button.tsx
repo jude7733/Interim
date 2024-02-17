@@ -1,7 +1,7 @@
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Button } from "./button";
 
-export const BigButton = ({ text, icon, onClick }) => {
+export const BigButton = ({ text, icon, onClick }:{text:string, icon: any, onClick:any}) => {
   return (
     <Button
       size="lg"

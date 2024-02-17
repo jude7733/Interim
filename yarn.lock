@@ -1437,7 +1437,7 @@ embla-carousel-autoplay@^8.0.0-rc19:
   resolved "https://registry.yarnpkg.com/embla-carousel-autoplay/-/embla-carousel-autoplay-8.0.0-rc22.tgz#c810a5f099db30dd1d6819ec69b0923495607419"
   integrity sha512-UFR9ocKapxuYwcAOv8mb6Rmy7TENpzzHTymKADzB1L5dAJJxjUtOci/OpE3KrZedQaniLMz3HIO9hHqgj1h/3w==
 
-embla-carousel-react@^8.0.0-rc19:
+embla-carousel-react@^8.0.0-rc22:
   version "8.0.0-rc22"
   resolved "https://registry.yarnpkg.com/embla-carousel-react/-/embla-carousel-react-8.0.0-rc22.tgz#cc017e5c370663a9517fa46fba55ea7ad1df5e17"
   integrity sha512-NwmISV0Cw9XVo76Vquz3hJaeZe7qoCRtrzStxlEY7qfZD8WR/f4JlQAso35URTs1BeYVhcuClflelioo+Zmidg==
