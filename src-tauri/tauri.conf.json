@@ -19,9 +19,14 @@
         "execute": true,
         "scope": [
           {
-            "name": "update",
+            "name": "sudo",
             "cmd": "pkexec",
-            "args": ["apt", "update"]
+            "args": true
+          },
+          {
+            "name": "packageManager",
+            "cmd": "apt",
+            "args": true
           }
         ]
       }
