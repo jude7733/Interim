@@ -19,17 +19,17 @@ import {
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Card, CardContent } from "./ui/card";
 
+const items = {
+  Dev: () => <TerminalSquare size={40} color="yellow" />,
+  Pip: () => <Library size={40} color="yellow" />,
+  Games: () => <Gamepad size={40} color="yellow" />,
+  Graphics: () => <Paintbrush size={40} color="yellow" />,
+  Internet: () => <ArrowDownUp size={40} color="yellow" />,
+  Multimedia: () => <MonitorPlay size={40} color="yellow" />,
+  Office: () => <Files size={40} color="yellow" />,
+  System: () => <Sliders size={40} color="yellow" />,
+};
 const CarouselComponent = () => {
-    const items = {
-      Dev: () => <TerminalSquare size={40} color="yellow" />,
-      Pip: () => <Library size={40} color="yellow" />,
-      Games: () => <Gamepad size={40} color="yellow" />,
-      Graphics: () => <Paintbrush size={40} color="yellow" />,
-      Internet: () => <ArrowDownUp size={40} color="yellow" />,
-      Multimedia: () => <MonitorPlay size={40} color="yellow" />,
-      Office: () => <Files size={40} color="yellow" />,
-      System: () => <Sliders size={40} color="yellow" />,
-    };
     return (
       <Carousel
         className="w-[70%]"
