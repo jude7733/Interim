@@ -1,25 +1,15 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "./ui/button";
 import { Head } from "./ui/head";
 import { Download } from "lucide-react";
 import CarouselComponent from "./carousel-component";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
-import { Label } from "./ui/label";
-import { useAppDispatch } from "@/app/hooks";
-import { shellCommands } from "@/app/shell";
+import { ToggleGroup } from "./ui/toggle-group";
 
-const CategoryCard = ({ title, pkg }: { title: string, pkg: string[] }) => {
-  const dispatch = useAppDispatch();
-
+const CategoryCard = ({ title, pkg }: { title: string; pkg: string[] }) => {
   return (
-    <Card className="flex items-center justify-center flex-col w-24">
+    <Card className="flex items-center justify-center flex-col w-24 pb-5">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
@@ -29,29 +19,8 @@ const CategoryCard = ({ title, pkg }: { title: string, pkg: string[] }) => {
             <Download size={40} />
           </Button>
         </HoverCardTrigger>
-        <HoverCardContent>
-          <Card className="flex items-center justify-center flex-col p-2 gap-1">
-            <CardHeader>
-              <CardTitle>{title}</CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col">
-              {pkg.map((item: string, index: number) => (
-                <Label key={index} className="text-foreground block">
-                  {item}
-                </Label>
-              ))}
-            </CardContent>
-            <CardFooter>
-              <Button
-                size="sm"
-                onClick={() =>
-                  shellCommands(dispatch, "sudo", ["apt", "install", "-y", ...pkg])
-                }
-              >
-                Download
-              </Button>
-            </CardFooter>
-          </Card>
+        <HoverCardContent className="w-auto p-1 shadow-sm shadow-primary">
+          <ToggleGroup title={title} pkg={pkg} />
         </HoverCardContent>
       </HoverCard>
     </Card>
@@ -76,6 +45,7 @@ const Categories = () => {
         <CategoryCard title="C++" pkg={["g++"]} />
         <CategoryCard title="R" pkg={["r-base"]} />
         <CategoryCard title="PHP" pkg={["php"]} />
+        <CategoryCard title="Lua" pkg={["lua"]} />
       </div>
     </ScrollArea>
   );

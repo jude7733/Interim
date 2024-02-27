@@ -30,39 +30,39 @@ const items = {
   System: () => <Sliders size={40} color="yellow" />,
 };
 const CarouselComponent = () => {
-    return (
-      <Carousel
-        className="w-[70%]"
-        opts={{
-          align: "start",
-          loop: true,
-        }}
-        plugins={[
-          Autoplay({
-            delay: 3000,
-          }),
-        ]}
-      >
-        <Card className="p-2">
-          <CarouselContent>
-            {Object.keys(items).map((key: string, index: number) => {
-              return (
-                <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
-                  <Card key={index}>
-                    <CardContent className="flex flex-col gap-2 p-2 aspect-square items-center justify-center border border-yellow-500 rounded-md">
-                      {(items as { [key: string]: () => JSX.Element })[key]()}
-                      <Label className="text-foreground">{key}</Label>
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              );
-            })}
-          </CarouselContent>
-        </Card>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-    );
-  };
-  
-  export default CarouselComponent;
+  return (
+    <Carousel
+      className="w-[70%]"
+      opts={{
+        align: "start",
+        loop: true,
+      }}
+      plugins={[
+        Autoplay({
+          delay: 3000,
+        }),
+      ]}
+    >
+      <Card className="p-2">
+        <CarouselContent>
+          {Object.keys(items).map((key: string, index: number) => {
+            return (
+              <CarouselItem key={index} className="md:basis-1/3 xl:basis-1/4">
+                <Card key={index}>
+                  <CardContent className="flex flex-col gap-2 p-2 aspect-square items-center justify-center border border-yellow-500 rounded-md">
+                    {(items as { [key: string]: () => JSX.Element })[key]()}
+                    <Label className="text-foreground">{key}</Label>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+            );
+          })}
+        </CarouselContent>
+      </Card>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+  );
+};
+
+export default CarouselComponent;
