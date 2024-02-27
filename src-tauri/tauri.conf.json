@@ -19,9 +19,14 @@
         "execute": true,
         "scope": [
           {
-            "name": "update",
-            "cmd": "winget",
-            "args": ["upgrade", "-h", "--all", "--include-unknown"]
+            "name": "sudo",
+            "cmd": "pkexec",
+            "args": true
+          },
+          {
+            "name": "packageManager",
+            "cmd": "apt",
+            "args": true
           }
         ]
       }
@@ -41,7 +46,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.interim.dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

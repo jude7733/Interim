@@ -2,7 +2,7 @@ import { Head } from "./ui/head";
 import { FolderInput, FolderOutput } from "lucide-react";
 import { BigButton } from "./ui/big-button";
 import { useAppDispatch } from "@/app/hooks";
-import { updateSystem } from "@/app/shell";
+import { shellCommands } from "@/app/shell";
 
 const Backup = () => {
   const dispatch = useAppDispatch();
@@ -14,12 +14,12 @@ const Backup = () => {
         <BigButton
           text="Import"
           icon={<FolderInput size={50} color="yellow" />}
-          onClick={() => updateSystem(dispatch)}
+          onClick={() => shellCommands(dispatch, "sudo", ["apt", "update"])}
         />
         <BigButton
           text="Export"
           icon={<FolderOutput size={50} color="yellow" />}
-          onClick={() => updateSystem(dispatch)}
+          onClick={() => shellCommands(dispatch, "sudo", ["apt", "update"])}
         />
       </div>
     </div>

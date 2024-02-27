@@ -2,7 +2,7 @@ import { useAppDispatch } from "@/app/hooks";
 import { Head } from "./ui/head";
 import { MonitorDown } from "lucide-react";
 import { BigButton } from "./ui/big-button";
-import { updateSystem } from "@/app/shell";
+import { shellCommands } from "@/app/shell";
 
 // const regex = /^\\b (?!_)/;
 const Update = () => {
@@ -15,7 +15,18 @@ const Update = () => {
         <BigButton
           text="Update System"
           icon={<MonitorDown size={50} color="yellow" />}
-          onClick={()=> updateSystem(dispatch)}
+          onClick={() =>
+            shellCommands(dispatch, "sudo", ["apt", "update"])
+              .then(() =>
+                shellCommands(dispatch, "packageManager", [
+                  "list",
+                  "--upgradable",
+                ])
+              )
+              .catch((error) =>
+                console.error(`shellCommands error: "${error}"`)
+              )
+          }
         />
       </div>
     </div>
