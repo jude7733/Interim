@@ -40,7 +40,7 @@ const SideMenu = () => {
         </TabsList>
       </div>
       <ResizablePanelGroup direction="vertical" className="rounded-md border">
-        <ResizablePanel defaultSize={75}>
+        <ResizablePanel defaultSize={80}>
           <div className="flex grow m-1 h-full w-full">
             <TabsContent value="backup" className="grow">
               <Backup />
@@ -54,7 +54,7 @@ const SideMenu = () => {
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={25}>
+        <ResizablePanel defaultSize={20}>
           <div className="flex h-full items-center justify-center p-1">
             <Terminal />
           </div>
