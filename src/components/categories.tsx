@@ -6,21 +6,27 @@ import { Download } from "lucide-react";
 import CarouselComponent from "./carousel-component";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { ToggleGroup } from "./ui/toggle-group";
+import { useState } from "react";
 
 const CategoryCard = ({ title, pkg }: { title: string; pkg: string[] }) => {
+  const [open, setOpen] = useState<boolean>(false);
   return (
-    <Card className="flex items-center justify-center flex-col w-24 pb-5">
+    <Card className="flex items-center justify-center flex-col w-24 pb-5 shadow-sm shadow-primary">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <HoverCard>
+      <HoverCard open={open}>
         <HoverCardTrigger asChild>
-          <Button variant="link" size="icon">
-            <Download size={40} />
+          <Button
+            variant="outline"
+            className="p-2"
+            onClick={() => setOpen(!open)}
+          >
+            <Download size={30} color="yellow" />
           </Button>
         </HoverCardTrigger>
         <HoverCardContent className="w-auto p-1 shadow-sm shadow-primary">
-          <ToggleGroup title={title} pkg={pkg} />
+          <ToggleGroup title={title} pkg={pkg} setOpen={setOpen} />
         </HoverCardContent>
       </HoverCard>
     </Card>
@@ -32,7 +38,7 @@ const Categories = () => {
     <ScrollArea className="w-full h-full flex flex-col items-center justify-start p-2">
       <Head title="Categories" />
       <div className="flex items-start justify-center w-full h-full flex-wrap gap-5">
-        <div className="w-full flex items-start justify-center py-5 mx-3 border-b rounded-xl border-b-yellow-900">
+        <div className="w-full flex items-start justify-center py-5 mx-3 border-b rounded-xl border-b-primary">
           <CarouselComponent />
         </div>
         <CategoryCard title="Python" pkg={["python3"]} />

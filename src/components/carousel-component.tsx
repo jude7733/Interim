@@ -32,7 +32,7 @@ const items = {
 const CarouselComponent = () => {
   return (
     <Carousel
-      className="w-[70%]"
+      className="md:w-[60%] "
       opts={{
         align: "start",
         loop: true,
