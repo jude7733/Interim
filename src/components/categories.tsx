@@ -35,12 +35,12 @@ const CategoryCard = ({ title, pkg }: { title: string; pkg: string[] }) => {
 
 const Categories = () => {
   return (
-    <ScrollArea className="w-full h-full flex flex-col items-center justify-start p-2">
+    <ScrollArea className="w-full h-full flex flex-col items-center justify-start p-2 gap-10">
       <Head title="Categories" />
-      <div className="flex items-start justify-center w-full h-full flex-wrap gap-5">
-        <div className="w-full flex items-start justify-center py-5 mx-3 border-b rounded-xl border-b-primary">
-          <CarouselComponent />
-        </div>
+      <div className="flex items-center justify-center py-5 border-b rounded-xl border-b-primary w-full">
+        <CarouselComponent />
+      </div>
+      <div className="flex flex-wrap items-center justify-center gap-5 my-5 mx-1">
         <CategoryCard title="Python" pkg={["python3"]} />
         <CategoryCard title="Java" pkg={["open-jdk", "open-jre"]} />
         <CategoryCard title="Flutter" pkg={["flutter"]} />
