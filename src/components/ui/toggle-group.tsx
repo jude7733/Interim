@@ -31,8 +31,8 @@ export const ToggleGroup = ({
           <div
             className={
               list.includes(item)
-                ? "flex items-center justify-around p-1 border-2 rounded-lg gap-5 mb-2"
-                : "flex items-center justify-around p-2 gap-5 mb-2"
+                ? "flex items-center justify-around p-1 gap-5 mb-2 border-2 rounded-lg border-x-primary "
+                : "flex items-center justify-around p-1 gap-5 mb-2 border-2 rounded-lg border-destructive"
             }
           >
             <Label key={index}>{item}</Label>
