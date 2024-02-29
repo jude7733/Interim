@@ -5,6 +5,7 @@ import { Button } from "./button";
 import { shellCommands } from "@/app/shell";
 import { useAppDispatch } from "@/app/hooks";
 import { useState } from "react";
+import { Separator } from "./separator";
 
 export const ToggleGroup = ({
   title,
@@ -29,22 +30,21 @@ export const ToggleGroup = ({
     <div className="flex flex-col items-center justify-between gap-5 p-4">
       <div className="flex items-start justify-between w-full">
         <Label className="font-bold pt-3">{title}</Label>
-        <XCircle
-          className="h-4 w-4"
-          onClick={() => setOpen(false)}
-          color="yellow"
-        />
+        <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
+          <XCircle className="h-5 w-5" color="red" />
+        </Button>
       </div>
       <div>
         {pkg.map((item: string, index: number) => (
           <div
             className={
               list.includes(item)
-                ? "flex items-center justify-around p-1 gap-6 mb-2 border rounded-xl shadow-md shadow-primary"
-                : "flex items-center justify-around p-1 gap-6 mb-2 border rounded-xl border-destructive"
+                ? "flex items-center justify-around p-1 pl-4 gap-6 mb-4 border rounded-xl shadow-md shadow-primary"
+                : "flex items-center justify-around p-1 pl-4 gap-6 mb-2 border rounded-xl"
             }
           >
             <Label key={index}>{item}</Label>
+            <Separator orientation="vertical" color="yellow" />
             <Toggle onPressedChange={() => handleClick(item)}>
               {list.includes(item) ? (
                 <Minus className="h-6 w-6" color="yellow" />
@@ -57,12 +57,13 @@ export const ToggleGroup = ({
       </div>
       <Button
         size="sm"
+        {...(list.length === 0 && { disabled: true })}
         onClick={() => {
           shellCommands(dispatch, "sudo", ["apt", "install", "-y", ...list]);
           setOpen(false);
         }}
       >
-        Download
+        <Label>Install</Label>
       </Button>
     </div>
   );

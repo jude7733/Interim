@@ -4,9 +4,14 @@ import { Button } from "./ui/button";
 import { Head } from "./ui/head";
 import { Download } from "lucide-react";
 import CarouselComponent from "./carousel-component";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { ToggleGroup } from "./ui/toggle-group";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { useState } from "react";
+import { PopoverArrow} from "@radix-ui/react-popover";
 
 const CategoryCard = ({ title, pkg }: { title: string; pkg: string[] }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -15,8 +20,8 @@ const CategoryCard = ({ title, pkg }: { title: string; pkg: string[] }) => {
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <HoverCard open={open}>
-        <HoverCardTrigger asChild>
+      <Popover open={open} modal>
+        <PopoverTrigger asChild>
           <Button
             variant="outline"
             className="p-2"
@@ -24,11 +29,12 @@ const CategoryCard = ({ title, pkg }: { title: string; pkg: string[] }) => {
           >
             <Download size={30} color="yellow" />
           </Button>
-        </HoverCardTrigger>
-        <HoverCardContent className="w-auto p-1 shadow-sm shadow-primary">
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-1 shadow-sm shadow-primary">
+          <PopoverArrow color="yellow" />
           <ToggleGroup title={title} pkg={pkg} setOpen={setOpen} />
-        </HoverCardContent>
-      </HoverCard>
+        </PopoverContent>
+      </Popover>
     </Card>
   );
 };
@@ -41,12 +47,12 @@ const Categories = () => {
         <CarouselComponent />
       </div>
       <div className="flex flex-wrap items-center justify-center gap-5 my-5 mx-1">
-        <CategoryCard title="Python" pkg={["python3"]} />
-        <CategoryCard title="Java" pkg={["open-jdk", "open-jre"]} />
-        <CategoryCard title="Flutter" pkg={["flutter"]} />
-        <CategoryCard title="Rust" pkg={["rustup"]} />
-        <CategoryCard title="Go" pkg={["go"]} />
-        <CategoryCard title="Ruby" pkg={["ruby"]} />
+        <CategoryCard title="Python" pkg={["python3", "python3-pip"]} />
+        <CategoryCard title="Java" pkg={["default-jdk"]} />
+        {/* <CategoryCard title="Flutter" pkg={["flutter"]} /> */}
+        <CategoryCard title="Rust" pkg={["rustc"]} />
+        <CategoryCard title="Go" pkg={["golang-go"]} />
+        <CategoryCard title="Ruby" pkg={["ruby-full"]} />
         <CategoryCard title="Node" pkg={["nodejs"]} />
         <CategoryCard title="C++" pkg={["g++"]} />
         <CategoryCard title="R" pkg={["r-base"]} />
