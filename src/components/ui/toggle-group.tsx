@@ -1,4 +1,4 @@
-import { Minus, Plus, XCircle } from "lucide-react";
+import { Minus, Plus, X } from "lucide-react";
 import { Label } from "./label";
 import { Toggle } from "./toggle";
 import { Button } from "./button";
@@ -31,7 +31,7 @@ export const ToggleGroup = ({
       <div className="flex items-start justify-between w-full">
         <Label className="font-bold pt-3">{title}</Label>
         <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
-          <XCircle className="h-5 w-5" color="red" />
+          <X className="h-5 w-5" color="red" />
         </Button>
       </div>
       <div>
