@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Card, CardContent } from "./ui/card";
+import { Button } from "./ui/button";
 
 const items = {
   Dev: () => <TerminalSquare size={40} color="yellow" />,
@@ -49,10 +50,12 @@ const CarouselComponent = () => {
             return (
               <CarouselItem key={index} className="md:basis-1/3 xl:basis-1/4">
                 <Card key={index}>
-                  <CardContent className="flex flex-col gap-2 p-2 aspect-square items-center justify-center border border-yellow-500 rounded-md">
-                    {(items as { [key: string]: () => JSX.Element })[key]()}
-                    <Label className="text-foreground">{key}</Label>
-                  </CardContent>
+                  <Button asChild className="w-auto h-auto" variant="outline">
+                    <CardContent className="flex flex-col gap-2 p-2 aspect-square items-center justify-center border border-primary shadow-sm shadow-primary rounded-md">
+                      {(items as { [key: string]: () => JSX.Element })[key]()}
+                      <Label className="text-foreground">{key}</Label>
+                    </CardContent>
+                  </Button>
                 </Card>
               </CarouselItem>
             );
