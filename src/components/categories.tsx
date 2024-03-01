@@ -41,7 +41,7 @@ const Categories = () => {
   return (
     <ScrollArea className="w-full h-full flex flex-col items-center justify-center p-2 gap-10">
       <Head title="Categories" />
-      <div className="flex items-center justify-center py-5 border-b rounded-xl border-b-primary">
+      <div className="flex items-center justify-center py-5 border-b-2 rounded-xl">
         <CarouselComponent />
       </div>
       <div className="flex flex-wrap items-center justify-center gap-5 my-5 mx-1">

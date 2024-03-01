@@ -14,7 +14,7 @@ export const ToggleGroup = ({
 }: {
   title: string;
   pkg: string[];
-  setOpen: (open: boolean) => void;
+  setOpen: (open: boolean) => void | boolean;
 }) => {
   const dispatch = useAppDispatch();
   const [list, setList] = useState<string[]>(pkg);
@@ -30,9 +30,9 @@ export const ToggleGroup = ({
     <div className="flex flex-col items-center justify-between gap-5 p-4">
       <div className="flex items-start justify-between w-full">
         <Label className="font-bold pt-3">{title}</Label>
-        <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
+       { setOpen && <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
           <X className="h-5 w-5" color="red" />
-        </Button>
+        </Button>}
       </div>
       <div>
         {pkg.map((item: string, index: number) => (
