@@ -7,11 +7,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Cloud, FolderInput, FolderOutput } from "lucide-react";
+import { DownloadCloud, FileUp, FolderInput, FolderOutput } from "lucide-react";
 import { BigButton } from "./ui/big-button";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
-import { Separator } from "./ui/separator";
 import { useState } from "react";
 
 const Backup = () => {
@@ -35,7 +34,7 @@ const Backup = () => {
   return (
     <div className="flex flex-col items-start justify-start m-1 p-1 w-full h-full">
       <Head title="Backup" />
-      <div className="flex justify-center items-center w-full gap-10 grow">
+      <div className="flex justify-center items-center w-full gap-14 grow">
         <Dialog>
           <DialogTrigger>
             <BigButton
@@ -50,21 +49,25 @@ const Backup = () => {
                 You can import your config from a file or from cloud
               </DialogDescription>
               <div className="flex justify-evenly items-center py-10">
-                <div className="flex flex-col gap-5 p-5 rounded-lg shadow-primary shadow-md">
-                  <Label>Import from System</Label>
-                  <Separator />
+                <div className="flex flex-col items-center gap-5 p-5 rounded-lg shadow-primary shadow-md">
+                  <Label>From System</Label>
                   <input
                     type="file"
+                    id="fileUpload"
                     accept=".json"
-                    className="w-5"
+                    className="hidden"
                     onChange={handleFileUpload}
                   />
+                  <Button variant="ghost" className="p-2">
+                    <label htmlFor="fileUpload">
+                      <FileUp size={35} color="yellow" />
+                    </label>
+                  </Button>
                 </div>
-                <div className="flex flex-col gap-5 p-5 rounded-lg shadow-primary shadow-md">
-                  <Label>Import from Cloud</Label>
-                  <Separator />
-                  <Button variant="ghost">
-                    <Cloud size={30} />
+                <div className="flex flex-col items-center gap-5 p-5 rounded-lg shadow-primary shadow-md">
+                  <Label>From Cloud</Label>
+                  <Button variant="ghost" className="p-2">
+                    <DownloadCloud size={35} color="yellow" />
                   </Button>
                 </div>
               </div>
