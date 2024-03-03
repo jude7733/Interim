@@ -1,4 +1,4 @@
-const os: string = navigator.userAgent.split(" ")[2].replace(";", "");
+export const os: string = navigator.userAgent.split(" ")[2].replace(";", "");
 export const packageManager: string =
   os === "Windows"
     ? "winget"
