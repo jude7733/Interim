@@ -11,7 +11,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useState } from "react";
-import { PopoverArrow} from "@radix-ui/react-popover";
 
 const CategoryCard = ({ title, pkg }: { title: string; pkg: string[] }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -31,7 +30,6 @@ const CategoryCard = ({ title, pkg }: { title: string; pkg: string[] }) => {
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-1 shadow-sm shadow-primary">
-          <PopoverArrow color="yellow" />
           <ToggleGroup title={title} pkg={pkg} setOpen={setOpen} />
         </PopoverContent>
       </Popover>
@@ -41,15 +39,14 @@ const CategoryCard = ({ title, pkg }: { title: string; pkg: string[] }) => {
 
 const Categories = () => {
   return (
-    <ScrollArea className="w-full h-full flex flex-col items-center justify-start p-2 gap-10">
+    <ScrollArea className="w-full h-full flex flex-col items-center justify-center p-2 gap-10">
       <Head title="Categories" />
-      <div className="flex items-center justify-center py-5 border-b rounded-xl border-b-primary w-full">
+      <div className="flex items-center justify-center py-5 border-b-2 rounded-xl">
         <CarouselComponent />
       </div>
       <div className="flex flex-wrap items-center justify-center gap-5 my-5 mx-1">
         <CategoryCard title="Python" pkg={["python3", "python3-pip"]} />
         <CategoryCard title="Java" pkg={["default-jdk"]} />
-        {/* <CategoryCard title="Flutter" pkg={["flutter"]} /> */}
         <CategoryCard title="Rust" pkg={["rustc"]} />
         <CategoryCard title="Go" pkg={["golang-go"]} />
         <CategoryCard title="Ruby" pkg={["ruby-full"]} />
@@ -58,6 +55,12 @@ const Categories = () => {
         <CategoryCard title="R" pkg={["r-base"]} />
         <CategoryCard title="PHP" pkg={["php"]} />
         <CategoryCard title="Lua" pkg={["lua"]} />
+        <CategoryCard title="Perl" pkg={["perl"]} />
+        <CategoryCard title="MySQL" pkg={["mysql"]} />
+        <CategoryCard title="PostgreSQL" pkg={["postgresql"]} />
+        <CategoryCard title="MongoDB" pkg={["mongodb"]} />
+        <CategoryCard title="SQLite" pkg={["sqlite3"]} />
+        <CategoryCard title="Dart" pkg={["dart"]} />
       </div>
     </ScrollArea>
   );
