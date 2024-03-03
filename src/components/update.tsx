@@ -3,6 +3,7 @@ import { Head } from "./ui/head";
 import { MonitorDown } from "lucide-react";
 import { BigButton } from "./ui/big-button";
 import { shellCommands } from "@/app/shell";
+import { packageManager } from "@/app/constants";
 
 // const regex = /^\\b (?!_)/;
 const Update = () => {
@@ -19,6 +20,7 @@ const Update = () => {
             shellCommands(dispatch, "sudo", ["apt", "update"])
               .then(() =>
                 shellCommands(dispatch, "packageManager", [
+                  packageManager,
                   "list",
                   "--upgradable",
                 ])

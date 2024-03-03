@@ -6,6 +6,7 @@ import { shellCommands } from "@/app/shell";
 import { useAppDispatch } from "@/app/hooks";
 import { useState } from "react";
 import { Separator } from "./separator";
+import { packageManager } from "@/app/constants";
 
 export const ToggleGroup = ({
   title,
@@ -59,7 +60,7 @@ export const ToggleGroup = ({
         size="sm"
         {...(list.length === 0 && { disabled: true })}
         onClick={() => {
-          shellCommands(dispatch, "sudo", ["apt", "install", "-y", ...list]);
+          shellCommands(dispatch, "sudo", [packageManager, "install", "-y", ...list]);
           setOpen(false);
         }}
       >
