@@ -15,7 +15,7 @@ import { useState } from "react";
 const CategoryCard = ({ title, pkg }: { title: string; pkg: string[] }) => {
   const [open, setOpen] = useState<boolean>(false);
   return (
-    <Card className="flex items-center justify-center flex-col w-24 pb-5 shadow-sm shadow-primary">
+    <Card className="flex items-center justify-center flex-col w-24 pb-5 shadow-md shadow-primary">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
@@ -44,7 +44,7 @@ const Categories = () => {
       <div className="flex items-center justify-center py-5 border-b-2 rounded-xl">
         <CarouselComponent />
       </div>
-      <div className="flex flex-wrap items-center justify-center gap-5 my-5 mx-1">
+      <div className="flex flex-wrap items-center justify-center gap-7 my-5 sm:px-10 md:px-14 lg:px-20">
         <CategoryCard title="Python" pkg={["python3", "python3-pip"]} />
         <CategoryCard title="Java" pkg={["default-jdk"]} />
         <CategoryCard title="Rust" pkg={["rustc"]} />

@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarImage } from "./ui/avatar";
+import { Label } from "./ui/label";
 
 const OptionMenu = () => {
   return (
@@ -31,7 +32,9 @@ const TopBar = () => {
         <AvatarImage src="./hacker.png" />
       </Avatar>
       <div className="flex items-center gap-5">
-        <Badge variant="default">{os}</Badge>
+        <Badge variant="default">
+          <Label className="font-semibold"> {os}</Label>
+        </Badge>
         <div className="flex items-center gap-1">
           <OptionMenu />
           <ModeToggle />

@@ -1,13 +1,16 @@
-export const os: string = navigator.userAgent.split(" ")[2].replace(";", "");
+const userDevice: string[] = navigator.userAgent.split(" ");
+export const os: string = (userDevice[1] + " " + userDevice[2])
+  .replace("(", "")
+  .replace(";", "");
 export const packageManager: string =
-  os === "Windows"
+  os.includes("Windows")
     ? "winget"
-    : os === "Ubuntu"
+    : os.includes("Ubuntu")
     ? "apt"
-    : os === "Fedora"
+    : os.includes("Fedora")
     ? "dnf"
-    : os === "CentOS"
+    : os.includes("CentOS")
     ? "yum"
-    : os === "Mac"
+    : os.includes("Mac")
     ? "brew"
     : "unknown";

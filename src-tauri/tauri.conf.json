@@ -24,8 +24,8 @@
             "args": true
           },
           {
-            "name": "packageManager",
-            "cmd": "apt",
+            "name": "winget",
+            "cmd": "winget",
             "args": true
           }
         ]

@@ -34,7 +34,16 @@ const items = {
 };
 const packages = {
   Dev: ["python3", "python3-pip"],
-  Pip: ["python3-pip"],
+  Pip: [
+    "python3-pip",
+    "numpy",
+    "pandas",
+    "matplotlib",
+    "seaborn",
+    "scipy",
+    "scikit-learn",
+    "tensorflow",
+  ],
   Games: ["supertux", "supertuxkart"],
   Graphics: ["gimp", "inkscape"],
   Internet: ["firefox", "chromium"],
@@ -45,7 +54,7 @@ const packages = {
 const CarouselComponent = () => {
   return (
     <Carousel
-      className="w-[70%]"
+      className="2xl:max-w-[1280px] xl:max-w-[1024px] lg:max-w-[768px] md:max-w-[540px] sm:max-w-[380px] w-full h-full p-2"
       opts={{
         align: "start",
         loop: true,
@@ -60,7 +69,10 @@ const CarouselComponent = () => {
         <CarouselContent>
           {Object.keys(items).map((key: string, index: number) => {
             return (
-              <CarouselItem key={index} className="md:basis-1/3 xl:basis-1/4">
+              <CarouselItem
+                key={index}
+                className="basis-44 sm:basis-1/3 md:basis-1/4 lg:basis-1/4 xl:basis-1/5 max-w-full"
+              >
                 <Dialog>
                   <Card key={index}>
                     <DialogTrigger className="w-full h-full border border-primary shadow-sm shadow-primary rounded-md">
@@ -74,7 +86,11 @@ const CarouselComponent = () => {
                       </Button>
                     </DialogTrigger>
                     <DialogContent>
-                      <ToggleGroup title={key} pkg={packages[key]} setOpen={false} />
+                      <ToggleGroup
+                        title={key}
+                        pkg={packages[key]}
+                        setOpen={false}
+                      />
                     </DialogContent>
                   </Card>
                 </Dialog>
