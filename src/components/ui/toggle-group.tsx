@@ -6,6 +6,7 @@ import { shellCommands } from "@/app/shell";
 import { useAppDispatch } from "@/app/hooks";
 import { useState } from "react";
 import { Separator } from "./separator";
+import { packageManager } from "@/app/constants";
 
 export const ToggleGroup = ({
   title,
@@ -30,16 +31,18 @@ export const ToggleGroup = ({
     <div className="flex flex-col items-center justify-between gap-5 p-4">
       <div className="flex items-start justify-between w-full">
         <Label className="font-bold pt-3">{title}</Label>
-       { setOpen && <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
-          <X className="h-5 w-5" color="red" />
-        </Button>}
+        {setOpen && (
+          <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
+            <X className="h-5 w-5" color="red" />
+          </Button>
+        )}
       </div>
       <div>
         {pkg.map((item: string, index: number) => (
           <div
             className={
               list.includes(item)
-                ? "flex items-center justify-around p-1 pl-4 gap-6 mb-4 border rounded-xl shadow-md shadow-primary"
+                ? "flex items-center justify-around p-1 pl-4 gap-6 mb-2 border rounded-xl shadow-md shadow-primary"
                 : "flex items-center justify-around p-1 pl-4 gap-6 mb-2 border rounded-xl"
             }
           >
@@ -59,7 +62,12 @@ export const ToggleGroup = ({
         size="sm"
         {...(list.length === 0 && { disabled: true })}
         onClick={() => {
-          shellCommands(dispatch, "sudo", ["apt", "install", "-y", ...list]);
+          shellCommands(dispatch, "sudo", [
+            packageManager,
+            "install",
+            "-y",
+            ...list,
+          ]);
           setOpen(false);
         }}
       >

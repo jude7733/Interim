@@ -16,7 +16,7 @@ const SideMenu = () => {
       orientation="vertical"
       className="flex flex-row grow"
     >
-      <div className="flex flex-col flex-initial m-1 border rounded-md p-1 gap-2">
+      <div className="flex flex-col flex-initial border-r-2 p-1 gap-2">
         <TabsList>
           <TabsTrigger value="backup">
             &nbsp;&nbsp;Backup &nbsp;&nbsp;
@@ -55,7 +55,7 @@ const SideMenu = () => {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={20}>
-          <div className="flex h-full items-center justify-center p-1">
+          <div className="flex h-full items-center justify-center px-1">
             <Terminal />
           </div>
         </ResizablePanel>
