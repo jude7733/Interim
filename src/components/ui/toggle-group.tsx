@@ -7,6 +7,7 @@ import { useAppDispatch } from "@/app/hooks";
 import { useState } from "react";
 import { Separator } from "./separator";
 import { packageManager } from "@/app/constants";
+import { ScrollArea } from "./scroll-area";
 
 export const ToggleGroup = ({
   title,
@@ -28,51 +29,53 @@ export const ToggleGroup = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-between gap-5 p-4">
-      <div className="flex items-start justify-between w-full">
-        <Label className="font-bold pt-3">{title}</Label>
-        {setOpen && (
-          <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
-            <X className="h-5 w-5" color="red" />
-          </Button>
-        )}
+    <ScrollArea>
+      <div className="flex flex-col items-center justify-between gap-5 p-4">
+        <div className="flex items-start justify-between w-full">
+          <Label className="font-bold pt-3">{title}</Label>
+          {setOpen && (
+            <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
+              <X className="h-5 w-5" color="red" />
+            </Button>
+          )}
+        </div>
+        <div>
+          {pkg.map((item: string, index: number) => (
+            <div
+              className={
+                list.includes(item)
+                  ? "flex items-center justify-between p-1 pl-4 gap-6 mb-2 border rounded-xl shadow-md shadow-primary"
+                  : "flex items-center justify-between p-1 pl-4 gap-6 mb-2 border rounded-xl"
+              }
+            >
+              <Label key={index}>{item}</Label>
+              <Separator orientation="vertical" color="yellow" />
+              <Toggle onPressedChange={() => handleClick(item)}>
+                {list.includes(item) ? (
+                  <Minus className="h-6 w-6" color="yellow" />
+                ) : (
+                  <Plus className="h-6 w-6" color="yellow" />
+                )}
+              </Toggle>
+            </div>
+          ))}
+        </div>
+        <Button
+          size="sm"
+          {...(list.length === 0 && { disabled: true })}
+          onClick={() => {
+            shellCommands(dispatch, "sudo", [
+              packageManager,
+              "install",
+              "-y",
+              ...list,
+            ]);
+            setOpen(false);
+          }}
+        >
+          <Label>Install</Label>
+        </Button>
       </div>
-      <div>
-        {pkg.map((item: string, index: number) => (
-          <div
-            className={
-              list.includes(item)
-                ? "flex items-center justify-around p-1 pl-4 gap-6 mb-2 border rounded-xl shadow-md shadow-primary"
-                : "flex items-center justify-around p-1 pl-4 gap-6 mb-2 border rounded-xl"
-            }
-          >
-            <Label key={index}>{item}</Label>
-            <Separator orientation="vertical" color="yellow" />
-            <Toggle onPressedChange={() => handleClick(item)}>
-              {list.includes(item) ? (
-                <Minus className="h-6 w-6" color="yellow" />
-              ) : (
-                <Plus className="h-6 w-6" color="yellow" />
-              )}
-            </Toggle>
-          </div>
-        ))}
-      </div>
-      <Button
-        size="sm"
-        {...(list.length === 0 && { disabled: true })}
-        onClick={() => {
-          shellCommands(dispatch, "sudo", [
-            packageManager,
-            "install",
-            "-y",
-            ...list,
-          ]);
-          setOpen(false);
-        }}
-      >
-        <Label>Install</Label>
-      </Button>
-    </div>
+    </ScrollArea>
   );
 };
