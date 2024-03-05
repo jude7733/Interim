@@ -33,7 +33,7 @@ const items = {
   System: () => <Sliders size={40} color="yellow" />,
 };
 const packages = {
-  Dev: ["python3", "python3-pip"],
+  Dev: ["code", "python3-pip"],
   Pip: [
     "python3-pip",
     "numpy",
@@ -44,12 +44,19 @@ const packages = {
     "scikit-learn",
     "tensorflow",
   ],
-  Games: ["supertux", "supertuxkart"],
-  Graphics: ["gimp", "inkscape"],
+  Games: ["supertux", "lutris", "steam", "wine", "playonlinux"],
+  Graphics: ["gimp", "inkscape", "blender", "krita"],
   Internet: ["firefox", "chromium"],
-  Multimedia: ["vlc", "audacity"],
+  Multimedia: ["vlc", "audacity", "kodi", "handbrake"],
   Office: ["libreoffice"],
-  System: ["htop", "neofetch"],
+  System: [
+    "htop",
+    "neofetch",
+    "gnome-tweaks",
+    "timeshift",
+    "gparted",
+    "bleachbit",
+  ],
 };
 const CarouselComponent = () => {
   return (

@@ -8,9 +8,9 @@ export const shellCommands = async (
   cmdArgs: string[]
 ) => {
   const command = new Command(cmd, cmdArgs);
-  // command.on("close", (data) => {
-  //   setOutput(output + data.signal);
-  // });
+  command.on("close", (data) => {
+    dispatch(addLog(data.signal));
+  });
   command.on("error", (error) => console.error(`command error: "${error}"`));
   command.stdout.on("data", (line) => console.log(`command stdout: "${line}"`));
   command.stdout.on("data", (line) => {
