@@ -72,7 +72,7 @@ const CarouselComponent = () => {
         }),
       ]}
     >
-      <Card className="p-2">
+      <Card className="p-2 bg-accent">
         <CarouselContent>
           {Object.keys(items).map((key: string, index: number) => {
             return (
