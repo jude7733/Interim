@@ -55,9 +55,7 @@ const SideMenu = () => {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={20}>
-          <div className="flex h-full items-center justify-center px-1">
-            <Terminal />
-          </div>
+          <Terminal />
         </ResizablePanel>
       </ResizablePanelGroup>
     </Tabs>

@@ -11,7 +11,7 @@ export const Terminal = () => {
   }, [output]);
 
   return (
-    <ScrollArea className="flex h-full w-full rounded-md border-4 p-2 bg-accent">
+    <ScrollArea className="flex h-full w-full border-t-4 p-2 bg-accent">
       {output.map((line, storageKey) => (
         <p className="text-sm font-mono" ref={lineEnd} key={storageKey}>
           {line}
