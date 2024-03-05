@@ -21,8 +21,7 @@ const Update = () => {
                 )
               : shellCommands(dispatch, "sudo", [packageManager, "update"])
                   .then(() =>
-                    shellCommands(dispatch, "sudo", [
-                      packageManager,
+                    shellCommands(dispatch, packageManager, [
                       "list",
                       "--upgradable",
                     ])

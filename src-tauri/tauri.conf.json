@@ -27,6 +27,21 @@
             "name": "winget",
             "cmd": "winget",
             "args": true
+          },
+          {
+            "name": "apt",
+            "cmd": "apt",
+            "args": true
+          },
+          {
+            "name": "dnf",
+            "cmd": "dnf",
+            "args": true
+          },
+          {
+            "name": "yum",
+            "cmd": "yum",
+            "args": true
           }
         ]
       }
