@@ -2,7 +2,7 @@ import { useAppDispatch } from "@/app/hooks";
 import { Head } from "./ui/head";
 import { MonitorDown } from "lucide-react";
 import { BigButton } from "./ui/big-button";
-import { shellCommands } from "@/app/shell";
+import { shellCommands, updateSystem } from "@/app/shell";
 import { packageManager } from "@/app/constants";
 
 const Update = () => {
@@ -16,19 +16,11 @@ const Update = () => {
           icon={<MonitorDown size={50} color="yellow" />}
           onClick={() =>
             packageManager === "winget"
-              ? shellCommands(dispatch, "winget", ["upgrade"]).catch((error) =>
-                  console.error(`shellCommands error: "${error}"`)
-                )
-              : shellCommands(dispatch, "sudo", [packageManager, "update"])
-                  .then(() =>
-                    shellCommands(dispatch, packageManager, [
-                      "list",
-                      "--upgradable",
-                    ])
-                  )
-                  .catch((error) =>
-                    console.error(`shellCommands error: "${error}"`)
-                  )
+              ? updateSystem(dispatch)
+              : shellCommands(dispatch, "sudo", [
+                  packageManager,
+                  "update",
+                ]).then(() => updateSystem(dispatch))
           }
         />
       </div>
