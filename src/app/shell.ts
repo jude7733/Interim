@@ -23,7 +23,7 @@ export const shellCommands = async (
 };
 
 export const updateSystem = async (dispatch: any) => {
-  console.log(`updateSystem: "${packageManager}"`);
+  dispatch(setLock());
   const command =
     packageManager === "winget"
       ? new Command(packageManager, ["upgrade"])
@@ -31,6 +31,19 @@ export const updateSystem = async (dispatch: any) => {
   command.on("error", (error) => console.error(`command error: "${error}"`));
   command.stdout.on("data", (line) => {
     dispatch(addUpdate(line));
+    dispatch(addLog(line.length > 8 ? line : ""));
+  });
+  await command.execute().then(() => setLock());
+};
+
+export const installPackages = async (dispatch: any, pkg: string[]) => {
+  dispatch(setLock());
+  const command =
+    packageManager === "winget"
+      ? new Command(packageManager, ["install", ...pkg])
+      : new Command("sudo", [packageManager, "install", "-y", ...pkg]);
+  // command.on("error", (error) => console.error(`command error: "${error}"`));
+  command.stdout.on("data", (line) => {
     dispatch(addLog(line.length > 8 ? line : ""));
   });
   await command.execute().then(() => setLock());

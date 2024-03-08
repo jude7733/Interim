@@ -5,15 +5,15 @@ interface QueueState {
 }
 
 const initialState: QueueState = {
-  value: [""],
+  value: [],
 };
 
 export const queueSlice = createSlice({
   name: "queue",
   initialState,
   reducers: {
-    addQueue: (state, action: PayloadAction<string>) => {
-      state.value.push(action.payload);
+    addQueue: (state, action: PayloadAction<string[]>) => {
+      state.value.push(...action.payload);
     },
   },
 });

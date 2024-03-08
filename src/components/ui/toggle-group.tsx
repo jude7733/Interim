@@ -2,13 +2,11 @@ import { Minus, Plus, X } from "lucide-react";
 import { Label } from "./label";
 import { Toggle } from "./toggle";
 import { Button } from "./button";
-import { shellCommands } from "@/app/shell";
-import { useAppDispatch } from "@/app/hooks";
 import { useState } from "react";
 import { Separator } from "./separator";
-import { packageManager } from "@/app/constants";
 import { ScrollArea } from "./scroll-area";
 import { Checkbox } from "./checkbox";
+import QButton from "./Qbutton";
 
 export const ToggleGroup = ({
   title,
@@ -21,7 +19,6 @@ export const ToggleGroup = ({
   setOpen?: boolean | ((value: boolean) => void);
   checkBox?: boolean;
 }) => {
-  const dispatch = useAppDispatch();
   const [list, setList] = useState<string[]>(pkg);
   const [toggle, setToggle] = useState<boolean>(false);
   const handleClick = (item: string) => {
@@ -79,20 +76,7 @@ export const ToggleGroup = ({
           ))}
         </div>
         <Separator orientation="horizontal" color="yellow" />
-        <Button
-          size="sm"
-          {...(list.length === 0 && { disabled: true })}
-          onClick={() => {
-            shellCommands(dispatch, "sudo", [
-              packageManager,
-              "install",
-              "-y",
-              ...list,
-            ]);
-          }}
-        >
-          <Label>Install</Label>
-        </Button>
+        <QButton queue={list} />
       </div>
     </ScrollArea>
   );
