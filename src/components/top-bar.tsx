@@ -34,7 +34,7 @@ const TopBar = () => {
       </Avatar>
       <div className="flex items-center gap-5">
         <InstallButton />
-        <Badge variant="secondary">
+        <Badge variant="outline">
           <Label className="font-semibold">{os}</Label>
         </Badge>
         <div className="flex items-center gap-1">

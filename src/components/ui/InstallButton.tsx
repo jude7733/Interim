@@ -12,7 +12,7 @@ const InstallButton = () => {
       onClick={() => installPackages(dispatch, queue)}
       size="sm"
     >
-      <Label className="font-bold">Install</Label>
+      <Label className="font-semibold">Install</Label>
     </Button>
   );
 };
