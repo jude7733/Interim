@@ -8,15 +8,18 @@ import { useState } from "react";
 import { Separator } from "./separator";
 import { packageManager } from "@/app/constants";
 import { ScrollArea } from "./scroll-area";
+import { Checkbox } from "./checkbox";
 
 export const ToggleGroup = ({
   title,
   pkg,
   setOpen,
+  checkBox,
 }: {
   title: string;
   pkg: string[];
-  setOpen: (open: boolean) => void | boolean;
+  setOpen?: boolean | ((value: boolean) => void);
+  checkBox?: boolean;
 }) => {
   const dispatch = useAppDispatch();
   const [list, setList] = useState<string[]>(pkg);
@@ -34,7 +37,11 @@ export const ToggleGroup = ({
         <div className="flex items-start justify-between w-full">
           <Label className="font-bold pt-3">{title}</Label>
           {setOpen && (
-            <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => typeof setOpen === "function" && setOpen(false)}
+            >
               <X className="h-5 w-5" color="red" />
             </Button>
           )}
@@ -42,24 +49,36 @@ export const ToggleGroup = ({
         <div>
           {pkg.map((item: string, index: number) => (
             <div
-              className={
-                list.includes(item)
-                  ? "flex items-center justify-between p-1 pl-4 gap-6 mb-2 border rounded-xl shadow-md shadow-primary"
-                  : "flex items-center justify-between p-1 pl-4 gap-6 mb-2 border rounded-xl"
-              }
+              className={`
+                   flex items-center justify-between p-1 pl-4 gap-6 mb-4 border rounded-xl shadow-primary ${
+                     list.includes(item)
+                       ? checkBox
+                         ? "shadow-sm"
+                         : "shadow-md"
+                       : "shadow-none"
+                   }`}
             >
               <Label key={index}>{item}</Label>
               <Separator orientation="vertical" color="yellow" />
-              <Toggle onPressedChange={() => handleClick(item)}>
-                {list.includes(item) ? (
-                  <Minus className="h-6 w-6" color="yellow" />
-                ) : (
-                  <Plus className="h-6 w-6" color="yellow" />
-                )}
-              </Toggle>
+              {checkBox ? (
+                <Checkbox
+                  onCheckedChange={() => handleClick(item)}
+                  defaultChecked
+                  className="h-5 w-5 m-2"
+                />
+              ) : (
+                <Toggle onPressedChange={() => handleClick(item)}>
+                  {list.includes(item) ? (
+                    <Minus className="h-6 w-6" color="yellow" />
+                  ) : (
+                    <Plus className="h-6 w-6" color="yellow" />
+                  )}
+                </Toggle>
+              )}
             </div>
           ))}
         </div>
+        <Separator orientation="horizontal" color="yellow" />
         <Button
           size="sm"
           {...(list.length === 0 && { disabled: true })}
@@ -70,7 +89,6 @@ export const ToggleGroup = ({
               "-y",
               ...list,
             ]);
-            setOpen(false);
           }}
         >
           <Label>Install</Label>

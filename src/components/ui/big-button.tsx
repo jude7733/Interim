@@ -8,7 +8,7 @@ export const BigButton = ({
 }: {
   text: string;
   icon: any;
-  onClick: any;
+  onClick?: any;
 }) => {
   return (
     <Button
