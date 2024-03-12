@@ -18,25 +18,19 @@ const SideMenu = () => {
     >
       <div className="flex flex-col flex-initial border-r-2 p-1 gap-2">
         <TabsList>
-          <TabsTrigger value="backup">
-            &nbsp;&nbsp;Backup &nbsp;&nbsp;
-          </TabsTrigger>
+          <TabsTrigger value="backup">Backup</TabsTrigger>
         </TabsList>
         <TabsList>
           <TabsTrigger value="categories">Categories</TabsTrigger>
         </TabsList>
         <TabsList>
-          <TabsTrigger value="update">
-            &nbsp;&nbsp;Update &nbsp;&nbsp;
-          </TabsTrigger>
+          <TabsTrigger value="update">Update</TabsTrigger>
         </TabsList>
         <TabsList>
-          <TabsTrigger value="settings">&nbsp;Settings &nbsp;</TabsTrigger>
+          <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
         <TabsList>
-          <TabsTrigger value="exit">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </TabsTrigger>
+          <TabsTrigger value="exit">Exit</TabsTrigger>
         </TabsList>
       </div>
       <ResizablePanelGroup direction="vertical" className="rounded-md border">
