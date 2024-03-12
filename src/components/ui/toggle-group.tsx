@@ -1,4 +1,4 @@
-import { Minus, Plus, X } from "lucide-react";
+import { CheckSquare2Icon, Minus, Plus, TicketCheck, X } from "lucide-react";
 import { Label } from "./label";
 import { Toggle } from "./toggle";
 import { Button } from "./button";
@@ -7,6 +7,7 @@ import { Separator } from "./separator";
 import { ScrollArea } from "./scroll-area";
 import { Checkbox } from "./checkbox";
 import QButton from "./Qbutton";
+import { useAppSelector } from "@/app/hooks";
 
 export const ToggleGroup = ({
   title,
@@ -21,13 +22,14 @@ export const ToggleGroup = ({
 }) => {
   const [list, setList] = useState<string[]>(pkg);
   const [toggle, setToggle] = useState<boolean>(false);
+  const queue: string[] = useAppSelector((state) => state.queue.value);
   const handleClick = (item: string) => {
     setToggle(!toggle);
     list.includes(item)
       ? setList(list.filter((i) => i !== item))
-      : setList([...list, item]);
+      : !queue.includes(item) && setList([...list, item]);
   };
-
+  console.log(list);
   return (
     <ScrollArea>
       <div className="flex flex-col items-center justify-between gap-5 p-4">
@@ -57,7 +59,9 @@ export const ToggleGroup = ({
             >
               <Label key={index}>{item}</Label>
               <Separator orientation="vertical" color="yellow" />
-              {checkBox ? (
+              {queue.includes(item) ? (
+                <CheckSquare2Icon color="yellow" className="h-6 w-6 m-2" />
+              ) : checkBox ? (
                 <Checkbox
                   onCheckedChange={() => handleClick(item)}
                   defaultChecked

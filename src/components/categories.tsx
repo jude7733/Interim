@@ -19,7 +19,7 @@ const CategoryCard = ({ title, pkg }: { title: string; pkg: string[] }) => {
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <Popover open={open} modal>
+      <Popover open={open}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
