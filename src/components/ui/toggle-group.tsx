@@ -1,8 +1,8 @@
-import { CheckSquare2Icon, Minus, Plus, TicketCheck, X } from "lucide-react";
+import { CheckSquare2Icon, Minus, Plus, X } from "lucide-react";
 import { Label } from "./label";
 import { Toggle } from "./toggle";
 import { Button } from "./button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Separator } from "./separator";
 import { ScrollArea } from "./scroll-area";
 import { Checkbox } from "./checkbox";
@@ -20,16 +20,20 @@ export const ToggleGroup = ({
   setOpen?: boolean | ((value: boolean) => void);
   checkBox?: boolean;
 }) => {
+  const queue: string[] = useAppSelector((state) => state.queue.value);
   const [list, setList] = useState<string[]>(pkg);
   const [toggle, setToggle] = useState<boolean>(false);
-  const queue: string[] = useAppSelector((state) => state.queue.value);
+
+  useEffect(
+    () => setList(pkg.filter((item) => !queue.includes(item))),
+    [pkg, queue]
+  );
+
   const handleClick = (item: string) => {
     setToggle(!toggle);
-    list.includes(item)
-      ? setList(list.filter((i) => i !== item))
-      : !queue.includes(item) && setList([...list, item]);
+    !queue.includes(item) && setList([...list, item]);
   };
-  console.log(list);
+
   return (
     <ScrollArea>
       <div className="flex flex-col items-center justify-between gap-5 p-4">
@@ -80,7 +84,7 @@ export const ToggleGroup = ({
           ))}
         </div>
         <Separator orientation="horizontal" color="yellow" />
-        <QButton queue={list} />
+        {list.length > 0 && <QButton queue={list} />}
       </div>
     </ScrollArea>
   );
