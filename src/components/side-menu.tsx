@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/resizable";
 import { Terminal } from "./terminal";
 import Backup from "./backup";
-import Queue from "./ui/queue";
+import QueueList from "./ui/QueueList";
 
 const SideMenu = () => {
   return (
@@ -33,11 +33,11 @@ const SideMenu = () => {
         <TabsList>
           <TabsTrigger value="exit">Exit</TabsTrigger>
         </TabsList>
-        <Queue />
+        <QueueList />
       </div>
       <ResizablePanelGroup direction="vertical" className="rounded-md border">
         <ResizablePanel defaultSize={80}>
-          <div className="flex grow m-1 h-full w-full">
+          <div className="flex grow p-1 h-full w-full">
             <TabsContent value="backup" className="grow">
               <Backup />
             </TabsContent>
