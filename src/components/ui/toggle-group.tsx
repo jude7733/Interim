@@ -31,7 +31,9 @@ export const ToggleGroup = ({
 
   const handleClick = (item: string) => {
     setToggle(!toggle);
-    !queue.includes(item) && setList([...list, item]);
+    list.includes(item)
+      ? setList(list.filter((i) => i !== item))
+      : !queue.includes(item) && setList([...list, item]);
   };
 
   return (
@@ -64,7 +66,7 @@ export const ToggleGroup = ({
               <Label key={index}>{item}</Label>
               <Separator orientation="vertical" color="yellow" />
               {queue.includes(item) ? (
-                <CheckSquare2Icon color="yellow" className="h-6 w-6 m-2" />
+                <CheckSquare2Icon color="yellow" className="h-6 w-6" />
               ) : checkBox ? (
                 <Checkbox
                   onCheckedChange={() => handleClick(item)}

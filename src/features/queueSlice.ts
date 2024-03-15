@@ -15,10 +15,13 @@ export const queueSlice = createSlice({
     addQueue: (state, action: PayloadAction<string[]>) => {
       state.value.push(...action.payload);
     },
+    popQueue: (state, action: PayloadAction<string>) => {
+      state.value = state.value.filter((item) => item !== action.payload);
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addQueue } = queueSlice.actions;
+export const { addQueue, popQueue } = queueSlice.actions;
 
 export default queueSlice.reducer;
