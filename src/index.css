@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -48,7 +48,7 @@
     --ring: 35.5 91.7% 32.9%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
@@ -56,4 +56,15 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+html,
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+html::-webkit-scrollbar {
+  display: none;
 }
