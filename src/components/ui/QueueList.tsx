@@ -52,7 +52,8 @@ const QueueList = () => {
                   <>
                     <li
                       key={index}
-                      className="flex justify-between items-center group"
+                      className="flex justify-between items-center group animate-fade-in-down"
+                      style={{ animationDelay: `${index * 100}ms` }}
                     >
                       <Label>{item}</Label>
                       <Button

@@ -55,19 +55,18 @@ export const ToggleGroup = ({
       <ScrollArea className="h-auto max-h-96 w-full px-6">
         {pkg.map((item: string, index: number) => (
           <div
-            className={`
-                   flex items-center justify-between px-2 p-1 gap-8 mb-4 border rounded-xl shadow-primary ${
-                     list.includes(item)
-                       ? checkBox
-                         ? "shadow-sm"
-                         : "shadow-md"
-                       : "shadow-none"
-                   }`}
+            style={{ animationDelay: `${index * 100}ms` }}
+            className={`animate-fade-in-right flex items-center mx-1 justify-between pl-2 p-1 gap-8 mb-4 border rounded-xl shadow-primary ${
+              list.includes(item)
+                ? checkBox
+                  ? "shadow-sm"
+                  : "shadow-md"
+                : "shadow-none"
+            }`}
           >
             <Label key={index}>{item}</Label>
             {queue.includes(item) ? (
               <Button
-                className="opacity-100"
                 variant="outline"
                 size="icon"
                 onClick={() => dispatch(popQueue(item))}

@@ -16,7 +16,7 @@ const InstallButton = () => {
     >
       <Label className="mr-2">Install</Label>
       <Download size={20} />
-      <Label className="absolute -bottom-1 -right-2 bg-secondary font-bold text-secondary-foreground rounded-[50%] border-4">
+      <Label className={`${queue.length > 0 && "animate-bounce"} absolute -bottom-1 -right-2 bg-secondary font-bold text-secondary-foreground rounded-[50%] border-4`}>
         {queue.length}
       </Label>
     </Button>
