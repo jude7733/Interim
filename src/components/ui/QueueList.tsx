@@ -9,7 +9,7 @@ import { Label } from "./label";
 import { Trash2 } from "lucide-react";
 import { Button } from "./button";
 import { Separator } from "./separator";
-import { popQueue } from "@/features/queueSlice";
+import { clearQueue, popQueue } from "@/features/queueSlice";
 import { ScrollArea } from "./scroll-area";
 import { useEffect, useState } from "react";
 
@@ -35,7 +35,19 @@ const QueueList = () => {
                 empty ? "border" : "border-2"
               }`}
             >
-              {queue.length > 0 ? (
+              {!empty && (
+                <div className="flex justify-end mb-4">
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    className="w-12 h-7"
+                    onClick={() => dispatch(clearQueue())}
+                  >
+                    <Label className="font-medium cursor-pointer">Clear</Label>
+                  </Button>
+                </div>
+              )}
+              {!empty ? (
                 queue.map((item: string, index: number) => (
                   <>
                     <li
