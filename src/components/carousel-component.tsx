@@ -92,7 +92,7 @@ const CarouselComponent = () => {
                         </CardContent>
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="h-fit max-h-[70%] w-80">
+                    <DialogContent className="h-fit max-h-[75%] w-80">
                       <ToggleGroup
                         title={key}
                         pkg={packages[key as keyof typeof packages]}

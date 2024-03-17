@@ -36,7 +36,7 @@ const QueueList = () => {
               }`}
             >
               {!empty && (
-                <div className="flex justify-end mb-4">
+                <div className="flex justify-end mb-3">
                   <Button
                     variant="destructive"
                     size="sm"
