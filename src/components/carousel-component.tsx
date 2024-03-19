@@ -61,7 +61,7 @@ const packages = {
 const CarouselComponent = () => {
   return (
     <Carousel
-      className="2xl:max-w-[1280px] xl:max-w-[1024px] lg:max-w-[768px] md:max-w-[540px] sm:max-w-[380px] w-full h-full p-2"
+      className="2xl:max-w-[1280px] xl:max-w-[950px] lg:max-w-[768px] md:max-w-[540px] sm:max-w-[380px] w-full h-full p-2"
       opts={{
         align: "start",
         loop: true,
