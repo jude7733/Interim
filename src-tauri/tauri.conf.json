@@ -91,7 +91,17 @@
         "height": 720,
         "resizable": true,
         "title": "Interim",
-        "width": 1280
+        "width": 1280,
+        "visible": false,
+        "label": "main"
+      },
+      {
+        "width": 200,
+        "height": 250,
+        "decorations": false,
+        "url": "splashscreen.html",
+        "label": "splashscreen",
+        "center": true
       }
     ]
   }
