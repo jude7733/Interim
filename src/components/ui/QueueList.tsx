@@ -40,10 +40,12 @@ const QueueList = () => {
                   <Button
                     variant="destructive"
                     size="sm"
-                    className="w-12 h-7"
+                    className="w-10 h-6"
                     onClick={() => dispatch(clearQueue())}
                   >
-                    <Label className="font-medium cursor-pointer">Clear</Label>
+                    <Label className="font-medium text-sm cursor-pointer">
+                      Clear
+                    </Label>
                   </Button>
                 </div>
               )}
@@ -55,7 +57,9 @@ const QueueList = () => {
                       className="flex justify-between items-center group animate-fade-in-down"
                       style={{ animationDelay: `${index * 100}ms` }}
                     >
-                      <Label>{item}</Label>
+                      <Label className="text-xs font-thin max-w-20 overflow-hidden">
+                        {item}
+                      </Label>
                       <Button
                         className="opacity-20 group-hover:opacity-100 transition-opacity duration-100"
                         variant="outline"

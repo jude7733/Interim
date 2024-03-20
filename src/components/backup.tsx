@@ -12,26 +12,28 @@ import { BigButton } from "./ui/big-button";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { useRef, useState } from "react";
+import { ToggleGroup } from "./ui/toggle-group";
 
 const Backup = () => {
-  const [jsonData, setJsonData] = useState(null);
+  const [jsonData, setJsonData] = useState();
   const fileInput = useRef(null);
 
   const handleClick = () => {
     fileInput.current.click();
   };
-  const handleFileUpload = (event) => {
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
-        const content = JSON.parse(e.target.result);
-        setJsonData(content);
+        const data = JSON.parse(e?.target?.result);
+        setJsonData(
+          Object.keys(data.packages).map((key) => data.packages[key].windows)
+        );
       } catch (error) {
         console.error("Error parsing JSON file: ", error);
       }
     };
-
     reader.readAsText(file);
   };
 
@@ -47,37 +49,41 @@ const Backup = () => {
             />
           </DialogTrigger>
           <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Import config</DialogTitle>
-              <DialogDescription>
-                You can import your config.json from ...
-              </DialogDescription>
-              <div className="flex justify-evenly items-center py-10">
-                <Button
-                  variant="ghost"
-                  className="flex flex-col items-center gap-5 p-5 w-36 h-32 rounded-lg shadow-primary shadow-md"
-                  onClick={handleClick}
-                >
-                  <input
-                    type="file"
-                    ref={fileInput}
-                    id="fileUpload"
-                    accept=".json"
-                    className="hidden"
-                    onChange={handleFileUpload}
-                  />
-                  <Label>From System</Label>
-                  <FileUp size={35} color="yellow" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="flex flex-col items-center gap-5 p-5 w-36 h-32 rounded-lg shadow-primary shadow-md"
-                >
-                  <Label>From Cloud</Label>
-                  <DownloadCloud size={35} color="yellow" />
-                </Button>
-              </div>
-            </DialogHeader>
+            {jsonData ? (
+              <ToggleGroup title="Select Packages" pkg={jsonData} />
+            ) : (
+              <DialogHeader>
+                <DialogTitle>Import config</DialogTitle>
+                <DialogDescription>
+                  You can import your config.json from ...
+                </DialogDescription>
+                <div className="flex justify-evenly items-center py-10">
+                  <Button
+                    variant="ghost"
+                    className="flex flex-col items-center gap-5 p-5 w-36 h-32 rounded-lg shadow-primary shadow-md"
+                    onClick={handleClick}
+                  >
+                    <input
+                      type="file"
+                      ref={fileInput}
+                      id="fileUpload"
+                      accept=".json"
+                      className="hidden"
+                      onChange={handleFileUpload}
+                    />
+                    <Label>From System</Label>
+                    <FileUp size={35} color="yellow" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="flex flex-col items-center gap-5 p-5 w-36 h-32 rounded-lg shadow-primary shadow-md"
+                  >
+                    <Label>From Cloud</Label>
+                    <DownloadCloud size={35} color="yellow" />
+                  </Button>
+                </div>
+              </DialogHeader>
+            )}
           </DialogContent>
         </Dialog>
         <BigButton
