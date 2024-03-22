@@ -8,20 +8,19 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "interim",
+    "productName": "Interim",
     "version": "0.1.0"
   },
   "tauri": {
     "allowlist": {
       "all": false,
       "shell": {
-        "all": true,
         "execute": true,
         "scope": [
           {
             "name": "sudo",
             "cmd": "pkexec",
-            "args": true
+            "args": ["apt", { "validator": "^[a-zA-Z]+$" }]
           },
           {
             "name": "winget",
