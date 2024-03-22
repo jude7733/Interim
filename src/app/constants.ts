@@ -14,3 +14,33 @@ export const packageManager: string = os.includes("Windows")
   : os.includes("Mac")
   ? "brew"
   : "unknown";
+
+export const systemPackages = [
+  "bash",
+  "base-passwd",
+  "btrfs",
+  "busybox",
+  "cracklib",
+  "crypt",
+  "dash",
+  "lvm",
+  "diff",
+  "dm",
+  "file",
+  "hostname",
+  "init",
+  "boot",
+  "language",
+  "lib",
+  "linux",
+  "os-prober",
+  "util",
+  "reiser",
+  "shim",
+  "xfs",
+  "thin",
+  "grub",
+  "ncurses",
+  "ubuntu",
+  "login",
+];
