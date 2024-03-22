@@ -15,26 +15,30 @@ import { useRef, useState } from "react";
 import { ToggleGroup } from "./ui/toggle-group";
 
 const Backup = () => {
-  const [jsonData, setJsonData] = useState();
-  const fileInput = useRef(null);
+  const [jsonData, setJsonData] = useState<string[]>();
+  const fileInput = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
-    fileInput.current.click();
+    fileInput.current?.click();
   };
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const data = JSON.parse(e?.target?.result);
-        setJsonData(
-          Object.keys(data.packages).map((key) => data.packages[key].windows)
-        );
-      } catch (error) {
-        console.error("Error parsing JSON file: ", error);
-      }
-    };
-    reader.readAsText(file);
+    const file = event?.target?.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e?.target?.result as string);
+          setJsonData(
+            Object.keys(data.packages).map(
+              (key: string) => data.packages[key].windows
+            ) as string[]
+          );
+        } catch (error) {
+          console.error("Error parsing JSON file: ", error);
+        }
+      };
+      reader.readAsText(file);
+    }
   };
 
   return (
