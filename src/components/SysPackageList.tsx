@@ -27,6 +27,17 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
       : setList([...list, item]);
   };
 
+  const exportToSystem = () => {
+    const data = JSON.stringify(list);
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "interim.json";
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="flex flex-col gap-5 py-5 px-3">
       {packages.length > 0 ? (
@@ -50,7 +61,7 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
       </ScrollArea>
       {mode === "export" ? (
         <DialogFooter className="flex gap-4">
-          <Button size="sm" variant="secondary">
+          <Button size="sm" variant="secondary" onClick={exportToSystem}>
             <Label className="text-primary mr-1">System </Label>
             <FileUp color="yellow" />
           </Button>
