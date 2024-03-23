@@ -1,7 +1,7 @@
 import { addLog } from "@/features/logSlice";
 import { setLock } from "@/features/lockSlice";
 import { Command } from "@tauri-apps/api/shell";
-import { packageManager } from "./constants";
+import { packageManager, systemPackages } from "./constants";
 import { addUpdate } from "@/features/updateSlice";
 
 export const shellCommands = async (
@@ -47,4 +47,19 @@ export const installPackages = async (dispatch: any, pkg: string[]) => {
     dispatch(addLog(line.length > 8 ? line : ""));
   });
   await command.execute().then(() => setLock());
+};
+
+export const exportFromSystem = async () => {
+  const data: string[] = [];
+  const command = new Command(packageManager, ["list", "--manual-installed"]);
+  command.on("error", (error) => console.error(`command error: "${error}"`));
+  command.stdout.on("data", (line) => {
+    data.push(line.toString().split("/", 1)[0]);
+  });
+  await command.execute();
+  data.shift();
+
+  return data.filter(
+    (item) => !systemPackages.some((pkg: string) => item.includes(pkg))
+  );
 };
