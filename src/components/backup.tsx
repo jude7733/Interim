@@ -105,7 +105,7 @@ const Backup = () => {
               icon={<FolderOutput size={50} color="yellow" />}
             />
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="w-fit">
             <SysPackageList mode="export" />
           </DialogContent>
         </Dialog>
