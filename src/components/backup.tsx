@@ -7,20 +7,27 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { DownloadCloud, FileUp, FolderInput, FolderOutput } from "lucide-react";
+import {
+  DownloadCloud,
+  FileDown,
+  FolderInput,
+  FolderOutput,
+} from "lucide-react";
 import { BigButton } from "./ui/big-button";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { useRef, useState } from "react";
 import { ToggleGroup } from "./ui/toggle-group";
+import SysPackageList from "./SysPackageList";
 
 const Backup = () => {
   const [jsonData, setJsonData] = useState<string[]>();
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const handleClick = () => {
+  const handleFileInput = () => {
     fileInput.current?.click();
   };
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event?.target?.files?.[0];
     if (file) {
@@ -65,7 +72,7 @@ const Backup = () => {
                   <Button
                     variant="ghost"
                     className="flex flex-col items-center gap-5 p-5 w-36 h-32 rounded-lg shadow-primary shadow-md"
-                    onClick={handleClick}
+                    onClick={handleFileInput}
                   >
                     <input
                       type="file"
@@ -76,7 +83,7 @@ const Backup = () => {
                       onChange={handleFileUpload}
                     />
                     <Label>From System</Label>
-                    <FileUp size={35} color="yellow" />
+                    <FileDown size={35} color="yellow" />
                   </Button>
                   <Button
                     variant="ghost"
@@ -90,10 +97,18 @@ const Backup = () => {
             )}
           </DialogContent>
         </Dialog>
-        <BigButton
-          text="Export"
-          icon={<FolderOutput size={50} color="yellow" />}
-        />
+
+        <Dialog>
+          <DialogTrigger>
+            <BigButton
+              text="Export"
+              icon={<FolderOutput size={50} color="yellow" />}
+            />
+          </DialogTrigger>
+          <DialogContent>
+            <SysPackageList mode="export" />
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
