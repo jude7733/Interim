@@ -1,4 +1,4 @@
-import { exportFromSystem } from "@/app/shell";
+import { exportFromSystem, installPackages, listUpdates } from "@/app/shell";
 import { useEffect, useState } from "react";
 import { ScrollArea } from "./ui/scroll-area";
 import { Label } from "./ui/label";
@@ -6,14 +6,20 @@ import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
 import { CloudUpload, FileUp } from "lucide-react";
 import { DialogFooter, DialogHeader } from "./ui/dialog";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { Separator } from "./ui/separator";
 
-const SysPackageList = ({ mode }: { mode: string }) => {
+const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
   const [packages, setPackages] = useState<string[]>([]);
   const [list, setList] = useState<string[]>([]);
+  const dispatch = useAppDispatch();
+  const lock = useAppSelector((state) => state.lock.value);
 
   useEffect(() => {
-    mode == "export" && exportFromSystem().then((data) => setPackages(data));
-  }, [mode]);
+    mode == "export"
+      ? exportFromSystem().then((data) => setPackages(data))
+      : listUpdates(dispatch).then((data) => setPackages(data));
+  }, [dispatch, mode]);
 
   const handleCheck = (item: string) => {
     list.includes(item)
@@ -23,7 +29,11 @@ const SysPackageList = ({ mode }: { mode: string }) => {
 
   return (
     <div className="flex flex-col gap-5 py-5 px-3">
-      <DialogHeader>Select packages to {mode}</DialogHeader>
+      {packages.length > 0 ? (
+        <DialogHeader>Select packages to {mode}</DialogHeader>
+      ) : (
+        <Label className="font-medium text-lg">No packages to {mode}</Label>
+      )}
       <ScrollArea className="h-auto max-h-80 w-full px-6">
         {packages.map((pkg, index) => (
           <div
@@ -38,16 +48,31 @@ const SysPackageList = ({ mode }: { mode: string }) => {
           </div>
         ))}
       </ScrollArea>
-      <DialogFooter className="flex gap-4">
-        <Button size="sm" variant="secondary">
-          <Label>System </Label>
-          <FileUp />
-        </Button>
-        <Button size="sm" variant="secondary">
-          <Label>Cloud </Label>
-          <CloudUpload />
-        </Button>
-      </DialogFooter>
+      {mode === "export" ? (
+        <DialogFooter className="flex gap-4">
+          <Button size="sm" variant="secondary">
+            <Label className="text-primary mr-1">System </Label>
+            <FileUp color="yellow" />
+          </Button>
+          <Button size="sm" variant="secondary">
+            <Label className="text-primary mr-1">Cloud </Label>
+            <CloudUpload color="yellow" />
+          </Button>
+        </DialogFooter>
+      ) : (
+        list.length > 0 && (
+          <div className="flex flex-col gap-4 justify-center items-end">
+            <Separator />
+            <Button
+              onClick={() => installPackages(dispatch, list, "--only-upgrade")}
+              disabled={lock}
+              size="sm"
+            >
+              <Label>Update</Label>
+            </Button>
+          </div>
+        )
+      )}
     </div>
   );
 };
