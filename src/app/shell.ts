@@ -9,6 +9,7 @@ export const shellCommands = async (
   cmd: string,
   cmdArgs: string[]
 ) => {
+  dispatch(setLock());
   const command = new Command(cmd, cmdArgs);
   command.on("close", (data) => {
     dispatch(addLog(data.signal));
@@ -22,26 +23,36 @@ export const shellCommands = async (
   await command.execute().then(() => setLock());
 };
 
-export const updateSystem = async (dispatch: any) => {
+export const listUpdates = async (dispatch: any) => {
   dispatch(setLock());
-  const command =
-    packageManager === "winget"
-      ? new Command(packageManager, ["upgrade"])
-      : new Command(packageManager, ["list", "--upgradable"]);
+  const pkg: string[] = [];
+  const command = new Command(packageManager, ["list", "--upgradable"]);
   command.on("error", (error) => console.error(`command error: "${error}"`));
   command.stdout.on("data", (line) => {
+    pkg.push(line.toString().split("/", 1)[0]);
     dispatch(addUpdate(line));
     dispatch(addLog(line.length > 8 ? line : ""));
   });
   await command.execute().then(() => setLock());
+  pkg.shift();
+  return pkg;
 };
 
-export const installPackages = async (dispatch: any, pkg: string[]) => {
+export const installPackages = async (
+  dispatch: any,
+  pkg: string[],
+  flag?: string
+) => {
   dispatch(setLock());
   const command =
     packageManager === "winget"
       ? new Command(packageManager, ["install", ...pkg])
-      : new Command("sudo", [packageManager, "install", "-y", ...pkg]);
+      : new Command("sudo", [
+          packageManager,
+          "install",
+          "-y",
+          ...(flag ? [flag, ...pkg] : pkg),
+        ]);
   // command.on("error", (error) => console.error(`command error: "${error}"`));
   command.stdout.on("data", (line) => {
     dispatch(addLog(line.length > 8 ? line : ""));
