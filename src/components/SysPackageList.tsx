@@ -9,6 +9,8 @@ import { DialogFooter, DialogHeader } from "./ui/dialog";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { Separator } from "./ui/separator";
 import { Skeleton } from "./ui/skeleton";
+import { osType } from "@/app/constants";
+import { settings } from "@/app/config";
 
 const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
   const [packages, setPackages] = useState<string[]>([]);
@@ -36,7 +38,10 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
   };
 
   const exportToSystem = () => {
-    const data = JSON.stringify(list);
+    const data = JSON.stringify({
+      [osType]: list.map((item) => ({ name: item })),
+      settings: settings,
+    });
     const blob = new Blob([data], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -45,7 +50,7 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
     link.click();
     URL.revokeObjectURL(url);
   };
-  console.log(loading);
+
   return (
     <>
       {loading ? (

@@ -3,6 +3,9 @@ export const os: string = (userDevice[1] + " " + userDevice[2]).replace(
   /[^a-zA-Z0-9\s]/g,
   ""
 );
+
+export const osType: string = os.includes("Windows") ? "Windows" : "Linux";
+
 export const packageManager: string = os.includes("Windows")
   ? "winget"
   : os.includes("Ubuntu")

@@ -10,6 +10,7 @@ import {
 import {
   DownloadCloud,
   FileDown,
+  FileX,
   FolderInput,
   FolderOutput,
 } from "lucide-react";
@@ -19,9 +20,10 @@ import { Label } from "./ui/label";
 import { useRef, useState } from "react";
 import { ToggleGroup } from "./ui/toggle-group";
 import SysPackageList from "./SysPackageList";
+import { osType } from "@/app/constants";
 
 const Backup = () => {
-  const [jsonData, setJsonData] = useState<string[]>();
+  const [jsonData, setJsonData] = useState<string[]>([]);
   const fileInput = useRef<HTMLInputElement>(null);
 
   const handleFileInput = () => {
@@ -35,11 +37,7 @@ const Backup = () => {
       reader.onload = (e) => {
         try {
           const data = JSON.parse(e?.target?.result as string);
-          setJsonData(
-            Object.keys(data.packages).map(
-              (key: string) => data.packages[key].windows
-            ) as string[]
-          );
+          setJsonData(data[osType].map((pkg: { name: string }) => pkg.name));
         } catch (error) {
           console.error("Error parsing JSON file: ", error);
         }
@@ -54,13 +52,21 @@ const Backup = () => {
       <div className="flex justify-center items-center w-full gap-14 grow">
         <Dialog>
           <DialogTrigger>
-            <BigButton
-              text="Import"
-              icon={<FolderInput size={50} color="yellow" />}
-            />
+            {jsonData?.length > 0 ? (
+              <BigButton
+                text="Clear Import"
+                icon={<FileX size={50} color="yellow" />}
+                onClick={() => setJsonData([])}
+              />
+            ) : (
+              <BigButton
+                text="Import"
+                icon={<FolderInput size={50} color="yellow" />}
+              />
+            )}
           </DialogTrigger>
           <DialogContent>
-            {jsonData ? (
+            {jsonData.length > 0 ? (
               <ToggleGroup title="Select Packages" pkg={jsonData} />
             ) : (
               <DialogHeader>
