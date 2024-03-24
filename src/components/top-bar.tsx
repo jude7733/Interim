@@ -11,6 +11,7 @@ import {
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Label } from "./ui/label";
 import InstallButton from "./ui/InstallButton";
+import { useAppSelector } from "@/app/hooks";
 
 const OptionMenu = () => {
   return (
@@ -27,11 +28,18 @@ const OptionMenu = () => {
 };
 
 const TopBar = () => {
+  const user = useAppSelector((state) => state.user.value);
+
   return (
     <div className="bg-accent flex p-1 justify-between border-b-2 border-border">
-      <Avatar className="w-9 mr-4">
-        <AvatarImage src="./hacker.png" />
-      </Avatar>
+      <div className="flex justify-start items-center">
+        <Avatar className="w-9 mr-4">
+          <AvatarImage src="./hacker.png" />
+        </Avatar>
+        <Badge variant="secondary" className="font-normal text-sm">
+          {(user as { email: string })?.email}
+        </Badge>
+      </div>
       <div className="flex items-center gap-5">
         <InstallButton />
         <Badge variant="outline">
