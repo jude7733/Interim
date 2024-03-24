@@ -15,20 +15,23 @@ const Update = () => {
     <div className="flex items-start flex-col justify-start h-full w-full m-1 p-1">
       <Head title="Update" />
       <div className="flex flex-col flex-wrap w-full h-full gap-10 justify-center items-center">
-        <BigButton
-          text="Fetch updates"
-          icon={<MonitorDown size={50} color="yellow" />}
-          onClick={() =>
-            !checkedUpdates &&
-            (packageManager === "winget"
-              ? listUpdates(dispatch).then(() => setCheckedUpdates(true))
-              : shellCommands(dispatch, "sudo", [
-                  packageManager,
-                  "update",
-                ]).then(() => setCheckedUpdates(true)))
-          }
-        />
-        {checkedUpdates && <SysPackageList mode="update" />}
+        {checkedUpdates ? (
+          <SysPackageList mode="update" />
+        ) : (
+          <BigButton
+            text="Fetch updates"
+            icon={<MonitorDown size={50} color="yellow" />}
+            onClick={() =>
+              !checkedUpdates &&
+              (packageManager === "winget"
+                ? listUpdates(dispatch).then(() => setCheckedUpdates(true))
+                : shellCommands(dispatch, "sudo", [
+                    packageManager,
+                    "update",
+                  ]).then(() => setCheckedUpdates(true)))
+            }
+          />
+        )}
       </div>
     </div>
   );
