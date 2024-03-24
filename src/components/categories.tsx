@@ -15,7 +15,7 @@ import { useState } from "react";
 const CategoryCard = ({ title, pkg }: { title: string; pkg: string[] }) => {
   const [open, setOpen] = useState<boolean>(false);
   return (
-    <Card className="flex items-center justify-center flex-col w-24 pb-5 shadow-md shadow-primary">
+    <Card className="flex items-center justify-center flex-col w-28 pb-5 shadow-md shadow-primary">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
@@ -46,19 +46,18 @@ const Categories = () => {
       </div>
       <div className="flex flex-wrap items-center justify-center gap-7 my-5 sm:px-10 md:px-14 lg:px-20">
         <CategoryCard title="Python" pkg={["python3", "python3-pip"]} />
-        <CategoryCard title="Java" pkg={["default-jdk"]} />
+        <CategoryCard title="Java" pkg={["default-jdk", "default-jre"]} />
         <CategoryCard title="Rust" pkg={["rustc"]} />
         <CategoryCard title="Go" pkg={["golang-go"]} />
         <CategoryCard title="Ruby" pkg={["ruby-full"]} />
-        <CategoryCard title="Node" pkg={["nodejs"]} />
+        <CategoryCard title="Node" pkg={["nodejs", "npm"]} />
         <CategoryCard title="C++" pkg={["g++"]} />
         <CategoryCard title="R" pkg={["r-base"]} />
         <CategoryCard title="PHP" pkg={["php"]} />
-        <CategoryCard title="Lua" pkg={["lua"]} />
+        <CategoryCard title="Lua" pkg={["lua5.3"]} />
         <CategoryCard title="Perl" pkg={["perl"]} />
-        <CategoryCard title="MySQL" pkg={["mysql"]} />
-        <CategoryCard title="PostgreSQL" pkg={["postgresql"]} />
-        <CategoryCard title="MongoDB" pkg={["mongodb"]} />
+        <CategoryCard title="MySQL" pkg={["mysql-server"]} />
+        <CategoryCard title="MongoDB" pkg={["mongodb-org"]} />
         <CategoryCard title="SQLite" pkg={["sqlite3"]} />
         <CategoryCard title="Dart" pkg={["dart"]} />
       </div>
