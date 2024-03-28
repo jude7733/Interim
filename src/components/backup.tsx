@@ -17,33 +17,16 @@ import {
 import { BigButton } from "./ui/big-button";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { ToggleGroup } from "./ui/toggle-group";
 import SysPackageList from "./SysPackageList";
-import { osType } from "@/app/constants";
+import { openFile } from "@/app/dialog";
 
 const Backup = () => {
   const [jsonData, setJsonData] = useState<string[]>([]);
-  const fileInput = useRef<HTMLInputElement>(null);
 
-  const handleFileInput = () => {
-    fileInput.current?.click();
-  };
-
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event?.target?.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const data = JSON.parse(e?.target?.result as string);
-          setJsonData(data[osType].map((pkg: { name: string }) => pkg.name));
-        } catch (error) {
-          console.error("Error parsing JSON file: ", error);
-        }
-      };
-      reader.readAsText(file);
-    }
+  const handleFileOpen = async () => {
+    openFile().then((data) => setJsonData(data));
   };
 
   return (
@@ -78,16 +61,8 @@ const Backup = () => {
                   <Button
                     variant="ghost"
                     className="flex flex-col items-center gap-5 p-5 w-36 h-32 rounded-lg shadow-primary shadow-md"
-                    onClick={handleFileInput}
+                    onClick={handleFileOpen}
                   >
-                    <input
-                      type="file"
-                      ref={fileInput}
-                      id="fileUpload"
-                      accept=".json"
-                      className="hidden"
-                      onChange={handleFileUpload}
-                    />
                     <Label>From System</Label>
                     <FileDown size={35} color="yellow" />
                   </Button>
