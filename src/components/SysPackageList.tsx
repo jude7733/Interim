@@ -11,6 +11,7 @@ import { Separator } from "./ui/separator";
 import { Skeleton } from "./ui/skeleton";
 import { osType } from "@/app/constants";
 import { settings } from "@/app/config";
+import { saveFile } from "@/app/dialog";
 
 const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
   const [packages, setPackages] = useState<string[]>([]);
@@ -35,20 +36,6 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
     list.includes(item)
       ? setList(list.filter((i) => i !== item))
       : setList([...list, item]);
-  };
-
-  const exportToSystem = () => {
-    const data = JSON.stringify({
-      [osType]: list.map((item) => ({ name: item })),
-      settings: settings,
-    });
-    const blob = new Blob([data], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "interim.json";
-    link.click();
-    URL.revokeObjectURL(url);
   };
 
   return (
@@ -96,7 +83,18 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
           </ScrollArea>
           {mode === "export" ? (
             <DialogFooter className="flex gap-4">
-              <Button size="sm" variant="secondary" onClick={exportToSystem}>
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={() =>
+                  saveFile(
+                    JSON.stringify({
+                      [osType]: list.map((item) => ({ name: item })),
+                      settings: settings,
+                    })
+                  )
+                }
+              >
                 <Label className="text-primary mr-1">System </Label>
                 <FileUp color="yellow" />
               </Button>

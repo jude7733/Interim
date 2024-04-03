@@ -1,5 +1,5 @@
-import { open } from "@tauri-apps/api/dialog";
-import { readTextFile } from "@tauri-apps/api/fs";
+import { open, save } from "@tauri-apps/api/dialog";
+import { readTextFile, writeTextFile } from "@tauri-apps/api/fs";
 import { osType } from "./constants";
 
 export async function openFile() {
@@ -24,3 +24,14 @@ export async function openFile() {
     }
   }
 }
+
+export const saveFile = async (data: string) => {
+  await save({
+    defaultPath: "interim.json",
+    filters: [{ name: "interim", extensions: ["json"] }],
+  }).then((path) => {
+    if (path) {
+      writeTextFile({ path: path, contents: data });
+    }
+  });
+};
