@@ -1,4 +1,4 @@
-import { open, save } from "@tauri-apps/api/dialog";
+import { confirm, open, save } from "@tauri-apps/api/dialog";
 import { readTextFile, writeTextFile } from "@tauri-apps/api/fs";
 import { osType } from "./constants";
 
@@ -33,5 +33,17 @@ export const saveFile = async (data: string) => {
     if (path) {
       writeTextFile({ path: path, contents: data });
     }
+  });
+};
+
+export const confirmDialog = async (
+  message: string,
+  title: string,
+  okLabel?: string
+) => {
+  return await confirm(message, {
+    title: title,
+    type: "warning",
+    okLabel: okLabel,
   });
 };

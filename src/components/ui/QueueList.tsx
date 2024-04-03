@@ -12,15 +12,25 @@ import { Separator } from "./separator";
 import { clearQueue, popQueue } from "@/features/queueSlice";
 import { ScrollArea } from "./scroll-area";
 import { useEffect, useState } from "react";
+import { confirmDialog } from "@/app/dialog";
 
 const QueueList = () => {
   const queue: string[] = useAppSelector((state) => state.queue.value);
   const dispatch = useAppDispatch();
   const [empty, setEmpty] = useState<boolean>(false);
+
   useEffect(
     () => (queue.length == 0 ? setEmpty(true) : setEmpty(false)),
     [queue]
   );
+
+  const handleClearQueue = async () => {
+    await confirmDialog(
+      "Are you sure you want to clear the list of selected packages?",
+      "Clear queue",
+      "Clear"
+    ).then((confirmation) => confirmation && dispatch(clearQueue()));
+  };
 
   return (
     <Accordion type="single" collapsible className="mt-5">
@@ -41,7 +51,7 @@ const QueueList = () => {
                     variant="destructive"
                     size="sm"
                     className="w-10 h-6"
-                    onClick={() => dispatch(clearQueue())}
+                    onClick={handleClearQueue}
                   >
                     <Label className="font-medium text-sm cursor-pointer">
                       Clear
