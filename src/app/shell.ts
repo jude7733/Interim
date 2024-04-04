@@ -30,11 +30,11 @@ export const listUpdates = async (dispatch: any) => {
   command.on("error", (error) => console.error(`command error: "${error}"`));
   command.stdout.on("data", (line) => {
     pkg.push(line.toString().split("/", 1)[0]);
-    dispatch(addUpdate(line));
     dispatch(addLog(line.length > 8 ? line : ""));
   });
   await command.execute().then(() => setLock());
   pkg.shift();
+  dispatch(addUpdate(pkg));
   return pkg;
 };
 
@@ -50,8 +50,8 @@ export const installPackages = async (
       : new Command("sudo", [
           packageManager,
           "install",
-          "-y",
           ...(flag ? [flag, ...pkg] : pkg),
+          "-y",
         ]);
   // command.on("error", (error) => console.error(`command error: "${error}"`));
   command.stdout.on("data", (line) => {

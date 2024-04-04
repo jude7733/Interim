@@ -4,33 +4,42 @@ import { ScrollArea } from "./ui/scroll-area";
 import { Label } from "./ui/label";
 import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
-import { CloudUpload, FileUp } from "lucide-react";
+import { CloudUpload, FileUp, RefreshCcw } from "lucide-react";
 import { DialogFooter, DialogHeader } from "./ui/dialog";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { Separator } from "./ui/separator";
 import { Skeleton } from "./ui/skeleton";
-import { osType } from "@/app/constants";
+import { osType, packageManager } from "@/app/constants";
 import { settings } from "@/app/config";
 import { saveFile } from "@/app/dialog";
+import { shellCommands } from "@/app/shell";
 
 const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
   const [packages, setPackages] = useState<string[]>([]);
   const [list, setList] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const lock = useAppSelector((state) => state.lock.value);
-  const [loading, setLoading] = useState<boolean>(true);
+  const updates = useAppSelector((state) => state.update.value);
 
   useEffect(() => {
-    mode == "export"
-      ? exportFromSystem().then((data) => {
-          setPackages(data);
-          setLoading(false);
-        })
-      : listUpdates(dispatch).then((data) => {
+    if (mode === "export") {
+      exportFromSystem().then((data) => {
+        setPackages(data);
+        setLoading(false);
+      });
+    } else {
+      if (updates.length > 0) {
+        setPackages(updates);
+        setLoading(false);
+      } else {
+        listUpdates(dispatch).then((data) => {
           setPackages(data);
           setLoading(false);
         });
-  }, [dispatch, mode]);
+      }
+    }
+  }, [mode, dispatch, updates]);
 
   const handleCheck = (item: string) => {
     list.includes(item)
@@ -61,11 +70,33 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col gap-5 py-5 px-3">
+        <div
+          className={`flex flex-col gap-5 py-5 px-3 ${
+            mode === "update" && "border-2 rounded-xl shadow-primary shadow-md"
+          }`}
+        >
           {packages.length > 0 ? (
             <DialogHeader>Select packages to {mode}</DialogHeader>
           ) : (
-            <Label className="font-medium text-lg">No packages to {mode}</Label>
+            <div className="flex flex-col justify-around gap-5 items-center">
+              <Label className="font-medium text-lg">
+                No packages to {mode}
+              </Label>
+              <Button
+                size="sm"
+                onClick={() =>
+                  shellCommands(dispatch, "sudo", [
+                    packageManager,
+                    "update",
+                  ]).then(() =>
+                    listUpdates(dispatch).then((data) => setPackages(data))
+                  )
+                }
+              >
+                <Label className="text-sm mr-2">Refresh</Label>
+                <RefreshCcw />
+              </Button>
+            </div>
           )}
           <ScrollArea className="h-auto max-h-80 w-full px-6">
             {packages.map((pkg, index) => (
