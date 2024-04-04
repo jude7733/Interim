@@ -13,6 +13,7 @@ import { osType, packageManager } from "@/app/constants";
 import { settings } from "@/app/config";
 import { saveFile } from "@/app/dialog";
 import { shellCommands } from "@/app/shell";
+import { setConfig } from "@/app/firestore";
 
 const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
   const [packages, setPackages] = useState<string[]>([]);
@@ -21,6 +22,8 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
   const dispatch = useAppDispatch();
   const lock = useAppSelector((state) => state.lock.value);
   const updates = useAppSelector((state) => state.update.value);
+  const user = useAppSelector((state) => state.user.value);
+  console.log(user);
 
   useEffect(() => {
     if (mode === "export") {
@@ -129,7 +132,15 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
                 <Label className="text-primary mr-1">System </Label>
                 <FileUp color="yellow" />
               </Button>
-              <Button size="sm" variant="secondary">
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={() =>
+                  setConfig((user as { email: string })?.email, {
+                    [osType]: list.map((item) => ({ name: item })),
+                  })
+                }
+              >
                 <Label className="text-primary mr-1">Cloud </Label>
                 <CloudUpload color="yellow" />
               </Button>

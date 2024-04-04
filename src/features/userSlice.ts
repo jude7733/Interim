@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export const userSlice = createSlice({
-  name: "log",
+  name: "user",
   initialState,
   reducers: {
     addUser: (state, action: PayloadAction<object>) => {
