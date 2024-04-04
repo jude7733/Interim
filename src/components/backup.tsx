@@ -21,12 +21,19 @@ import { useState } from "react";
 import { ToggleGroup } from "./ui/toggle-group";
 import SysPackageList from "./SysPackageList";
 import { openFile } from "@/app/dialog";
+import { getConfig } from "@/app/firestore";
+import { useAppSelector } from "@/app/hooks";
 
 const Backup = () => {
   const [jsonData, setJsonData] = useState<string[]>([]);
+  const user = useAppSelector((state) => state.user?.value);
 
   const handleFileOpen = async () => {
     openFile().then((data) => setJsonData(data));
+  };
+
+  const handleCloudOpen = async () => {
+    getConfig(user?.email).then((data) => setJsonData(data));
   };
 
   return (
@@ -69,6 +76,7 @@ const Backup = () => {
                   <Button
                     variant="ghost"
                     className="flex flex-col items-center gap-5 p-5 w-36 h-32 rounded-lg shadow-primary shadow-md"
+                    onClick={handleCloudOpen}
                   >
                     <Label>From Cloud</Label>
                     <DownloadCloud size={35} color="yellow" />
