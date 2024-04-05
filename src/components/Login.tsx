@@ -1,7 +1,9 @@
 import { auth } from "@/app/firebase";
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  User,
 } from "firebase/auth";
 import { Head } from "./ui/head";
 import { Button } from "./ui/button";
@@ -11,29 +13,50 @@ import { useState } from "react";
 import { Label } from "./ui/label";
 import { useAppDispatch } from "@/app/hooks";
 import { addUser } from "@/features/userSlice";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTrigger,
+} from "./ui/dialog";
 
 export const Login = ({ skip }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState<boolean>(true);
   const dispatch = useAppDispatch();
 
   const signUp = async () => {
-    await createUserWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
-        const user = userCredential.user;
-      }
-    );
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user: User = userCredential.user;
+        setEmail(user?.email as string);
+        //send toast signed in as
+      })
+      .then(() => signIn())
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   const signIn = async () => {
     await signInWithEmailAndPassword(auth, email, password).then(
       (userCredential) => {
-        const user = userCredential.user;
+        const user: User = userCredential.user;
         dispatch(addUser(user));
         skip();
       }
     );
+  };
+
+  const handleForgotPassword = async (email: string) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -46,6 +69,7 @@ export const Login = ({ skip }) => {
           <Input
             type="email"
             placeholder="Email"
+            name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -58,17 +82,45 @@ export const Login = ({ skip }) => {
         </div>
         <div className="flex justify-around gap-5">
           <Button onClick={isLogin ? signIn : signUp}>
-            <LogIn className="mr-3" />{" "}
+            <LogIn className="mr-3" />
             <Label>{isLogin ? "Log In" : "Sign Up"}</Label>
           </Button>
           <Button variant="outline" onClick={() => setIsLogin(!isLogin)}>
             {isLogin ? "Sign Up" : "Log In"}
           </Button>
-
           <Button variant="secondary" onClick={skip}>
             Skip
           </Button>
         </div>
+        <Dialog>
+          <DialogTrigger>
+            <Button size="sm" variant="link">
+              Forgot Password?
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="space-y-4">
+            <DialogHeader>Reset Password</DialogHeader>
+            <DialogDescription>
+              Enter your email address and we will send you a password reset
+              link.
+            </DialogDescription>
+            <Input
+              className="mx-2 w-auto"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => handleForgotPassword(email)}
+              >
+                Send
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

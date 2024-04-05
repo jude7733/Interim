@@ -8,7 +8,6 @@ export async function setConfig(email: string, pkg: object) {
     ...pkg,
     settings,
   });
-  console.log("Config saved!");
 }
 
 export async function getConfig(email: string) {
@@ -16,6 +15,6 @@ export async function getConfig(email: string) {
   if (docSnap.exists()) {
     return docSnap.data()[osType].map((pkg: { name: string }) => pkg.name);
   } else {
-    console.log("No such document!");
+    return [];
   }
 }
