@@ -9,6 +9,7 @@ import {
 import { Terminal } from "./terminal";
 import Backup from "./backup";
 import QueueList from "./ui/QueueList";
+import Settings from "./settings";
 
 const SideMenu = () => {
   return (
@@ -30,9 +31,6 @@ const SideMenu = () => {
         <TabsList>
           <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
-        <TabsList>
-          <TabsTrigger value="exit">Exit</TabsTrigger>
-        </TabsList>
         <QueueList />
       </div>
       <ResizablePanelGroup direction="vertical" className="rounded-md border">
@@ -46,6 +44,9 @@ const SideMenu = () => {
             </TabsContent>
             <TabsContent value="update" className="grow">
               <Update />
+            </TabsContent>
+            <TabsContent value="settings" className="grow">
+              <Settings />
             </TabsContent>
           </div>
         </ResizablePanel>
