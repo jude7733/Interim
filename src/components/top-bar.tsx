@@ -31,16 +31,15 @@ const OptionMenu = () => {
 
 const TopBar = ({ hideLogin }: { hideLogin: boolean }) => {
   const user = useAppSelector((state) => state.user.value);
-  const email = user ? "" : user?.email;
 
   return (
-    <div className="bg-accent flex p-1 justify-between border-b-2 border-border">
+    <div className="bg-accent flex p-1 justify-between items-center border-b-2 border-border">
       <div className="flex justify-start items-center">
         <Avatar className="w-9 mr-4">
           <AvatarImage src="./hacker.png" />
         </Avatar>
         {!hideLogin &&
-          (email ? (
+          (user?.email ? (
             <Badge variant="secondary" className="font-normal text-sm">
               {(user as { email: string })?.email}
             </Badge>

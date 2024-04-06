@@ -21,20 +21,26 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "./ui/dialog";
+import { useToast } from "./ui/use-toast";
 
 export const Login = ({ skip }: { skip?: () => void }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const dispatch = useAppDispatch();
+  const { toast } = useToast();
 
   const signUp = async () => {
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user: User = userCredential.user;
         setEmail(user?.email as string);
-        //send toast signed in as
       })
+      .then(() =>
+        toast({
+          description: "Account created successfully",
+        })
+      )
       .then(() => signIn())
       .catch((error) => {
         alert(error.message);
@@ -42,15 +48,20 @@ export const Login = ({ skip }: { skip?: () => void }) => {
   };
 
   const signIn = async () => {
-    await signInWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
         const user: User = userCredential.user;
         dispatch(addUser(user));
         if (skip) {
           skip();
         }
-      }
-    );
+      })
+      .then(() =>
+        toast({
+          title: email,
+          description: "Logged in successfully",
+        })
+      );
   };
 
   const handleForgotPassword = async (email: string) => {
