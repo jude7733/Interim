@@ -22,7 +22,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 
-export const Login = ({ skip }) => {
+export const Login = ({ skip }: { skip?: () => void }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState<boolean>(true);
@@ -46,7 +46,9 @@ export const Login = ({ skip }) => {
       (userCredential) => {
         const user: User = userCredential.user;
         dispatch(addUser(user));
-        skip();
+        if (skip) {
+          skip();
+        }
       }
     );
   };
@@ -55,7 +57,7 @@ export const Login = ({ skip }) => {
     try {
       await sendPasswordResetEmail(auth, email);
     } catch (error) {
-      alert(error.message);
+      alert(error?.message);
     }
   };
 
@@ -65,7 +67,7 @@ export const Login = ({ skip }) => {
         <div className="flex justify-center">
           <Head title={isLogin ? "Login" : "Sign Up"} />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Input
             type="email"
             placeholder="Email"
@@ -88,9 +90,11 @@ export const Login = ({ skip }) => {
           <Button variant="outline" onClick={() => setIsLogin(!isLogin)}>
             {isLogin ? "Sign Up" : "Log In"}
           </Button>
-          <Button variant="secondary" onClick={skip}>
-            Skip
-          </Button>
+          {skip && (
+            <Button variant="secondary" onClick={skip}>
+              Skip
+            </Button>
+          )}
         </div>
         <Dialog>
           <DialogTrigger>

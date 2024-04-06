@@ -12,6 +12,8 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 import { Label } from "./ui/label";
 import InstallButton from "./ui/InstallButton";
 import { useAppSelector } from "@/app/hooks";
+import { Login } from "./Login";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 
 const OptionMenu = () => {
   return (
@@ -27,8 +29,9 @@ const OptionMenu = () => {
   );
 };
 
-const TopBar = () => {
+const TopBar = ({ hideLogin }: { hideLogin: boolean }) => {
   const user = useAppSelector((state) => state.user.value);
+  const email = user ? "" : user?.email;
 
   return (
     <div className="bg-accent flex p-1 justify-between border-b-2 border-border">
@@ -36,9 +39,21 @@ const TopBar = () => {
         <Avatar className="w-9 mr-4">
           <AvatarImage src="./hacker.png" />
         </Avatar>
-        <Badge variant="secondary" className="font-normal text-sm">
-          {(user as { email: string })?.email}
-        </Badge>
+        {!hideLogin &&
+          (email ? (
+            <Badge variant="secondary" className="font-normal text-sm">
+              {(user as { email: string })?.email}
+            </Badge>
+          ) : (
+            <Dialog>
+              <DialogTrigger>
+                <Button variant="secondary">Login</Button>
+              </DialogTrigger>
+              <DialogContent className="w-fit p-0">
+                <Login />
+              </DialogContent>
+            </Dialog>
+          ))}
       </div>
       <div className="flex items-center gap-5">
         <InstallButton />

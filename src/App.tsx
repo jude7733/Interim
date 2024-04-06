@@ -8,7 +8,7 @@ function App() {
 
   return (
     <div className="bg-background flex flex-col text-foreground border rounded-md h-screen">
-      <TopBar />
+      <TopBar hideLogin={showLogin} />
       {showLogin ? <Login skip={() => setShowLogin(false)} /> : <SideMenu />}
     </div>
   );
