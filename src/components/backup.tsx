@@ -20,7 +20,7 @@ import { Label } from "./ui/label";
 import { useState } from "react";
 import { ToggleGroup } from "./ui/toggle-group";
 import SysPackageList from "./SysPackageList";
-import { openFile } from "@/app/dialog";
+import { errorDialog, openFile } from "@/app/dialog";
 import { getConfig } from "@/app/firestore";
 import { useAppSelector } from "@/app/hooks";
 
@@ -29,11 +29,23 @@ const Backup = () => {
   const user = useAppSelector((state) => state.user?.value);
 
   const handleFileOpen = async () => {
-    openFile().then((data) => setJsonData(data));
+    openFile().then((data) => {
+      if (data.length > 0) {
+        setJsonData(data);
+      } else {
+        errorDialog("No packages found in the file", "Error");
+      }
+    });
   };
 
   const handleCloudOpen = async () => {
-    getConfig(user?.email).then((data) => setJsonData(data));
+    getConfig(user?.email).then((data) => {
+      if (data.length > 0) {
+        setJsonData(data);
+      } else {
+        errorDialog("No packages found in the cloud", "Error");
+      }
+    });
   };
 
   return (

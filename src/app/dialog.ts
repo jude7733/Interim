@@ -1,4 +1,4 @@
-import { confirm, open, save } from "@tauri-apps/api/dialog";
+import { confirm, open, save, message } from "@tauri-apps/api/dialog";
 import { readTextFile, writeTextFile } from "@tauri-apps/api/fs";
 import { osType } from "./constants";
 
@@ -13,14 +13,14 @@ export async function openFile() {
   });
 
   if (selected === null) {
-    // user cancelled the selection
+    alert("No file selected");
   } else {
     try {
       let config = await readTextFile(selected as string);
       config = JSON.parse(config);
       return config[osType].map((pkg: { name: string }) => pkg.name);
     } catch (error) {
-      console.error("Error parsing JSON file: ", error);
+      alert(error);
     }
   }
 }
@@ -45,5 +45,12 @@ export const confirmDialog = async (
     title: title,
     type: "warning",
     okLabel: okLabel,
+  });
+};
+
+export const errorDialog = async (errorMsg: string, title: string) => {
+  return await message(errorMsg, {
+    title: title,
+    type: "error",
   });
 };

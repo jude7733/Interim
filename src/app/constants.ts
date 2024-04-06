@@ -20,6 +20,8 @@ export const packageManager: string = os.includes("Windows")
 
 export const systemPackages = [
   "bash",
+  "cups",
+  "printer",
   "base-passwd",
   "btrfs",
   "busybox",
@@ -38,6 +40,9 @@ export const systemPackages = [
   "linux",
   "os-prober",
   "util",
+  "xorg",
+  "lxqt",
+  "xscreen",
   "reiser",
   "shim",
   "xfs",
