@@ -10,20 +10,21 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { Separator } from "./ui/separator";
 import { Skeleton } from "./ui/skeleton";
 import { osType, packageManager } from "@/app/constants";
-import { settings } from "@/app/config";
 import { saveFile } from "@/app/dialog";
 import { shellCommands } from "@/app/shell";
 import { setConfig } from "@/app/firestore";
+import { toast } from "./ui/use-toast";
 
 const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
   const [packages, setPackages] = useState<string[]>([]);
   const [list, setList] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [showCloud, setShowCloud] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const lock = useAppSelector((state) => state.lock.value);
   const updates = useAppSelector((state) => state.update.value);
   const user = useAppSelector((state) => state.user.value);
-  console.log(user);
+  const settings = useAppSelector((state) => state.settings.value);
 
   useEffect(() => {
     if (mode === "export") {
@@ -42,7 +43,7 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
         });
       }
     }
-  }, [mode, dispatch, updates]);
+  }, []);
 
   const handleCheck = (item: string) => {
     list.includes(item)
@@ -132,18 +133,27 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
                 <Label className="text-primary mr-1">System </Label>
                 <FileUp color="yellow" />
               </Button>
-              <Button
-                size="sm"
-                variant="secondary"
-                onClick={() =>
-                  setConfig((user as { email: string })?.email, {
-                    [osType]: list.map((item) => ({ name: item })),
-                  })
-                }
-              >
-                <Label className="text-primary mr-1">Cloud </Label>
-                <CloudUpload color="yellow" />
-              </Button>
+              {showCloud && (
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={async () =>
+                    await setConfig((user as { email: string })?.email, {
+                      [osType]: list.map((item) => ({ name: item })),
+                      settings: settings,
+                    })
+                      .then(() =>
+                        toast({
+                          description: "Saved to cloud",
+                        })
+                      )
+                      .then(() => setShowCloud(false))
+                  }
+                >
+                  <Label className="text-primary mr-1">Cloud </Label>
+                  <CloudUpload color="yellow" />
+                </Button>
+              )}
             </DialogFooter>
           ) : (
             list.length > 0 && (
