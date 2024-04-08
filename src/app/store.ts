@@ -4,6 +4,7 @@ import lockReducer from "../features/lockSlice";
 import updateReducer from "../features/updateSlice";
 import queueReducer from "../features/queueSlice";
 import userReducer from "../features/userSlice";
+import settingsReducer from "../features/settingsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     update: updateReducer,
     queue: queueReducer,
     user: userReducer,
+    settings: settingsReducer,
   },
 });
 

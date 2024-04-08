@@ -68,7 +68,9 @@ export const Login = ({ skip }: { skip?: () => void }) => {
     try {
       await sendPasswordResetEmail(auth, email);
     } catch (error) {
-      alert(error?.message);
+      const errorMessage =
+        error instanceof Error ? error.message : "An error occurred.";
+      alert(errorMessage);
     }
   };
 
@@ -84,12 +86,14 @@ export const Login = ({ skip }: { skip?: () => void }) => {
             placeholder="Email"
             name="email"
             value={email}
+            className="min-w-60"
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input
             type="password"
             placeholder="Password"
             value={password}
+            className="min-w-60"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>

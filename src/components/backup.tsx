@@ -21,12 +21,12 @@ import { useState } from "react";
 import { ToggleGroup } from "./ui/toggle-group";
 import SysPackageList from "./SysPackageList";
 import { errorDialog, openFile } from "@/app/dialog";
-import { getConfig } from "@/app/firestore";
+import { getCloudPackages } from "@/app/firestore";
 import { useAppSelector } from "@/app/hooks";
 
 const Backup = () => {
   const [jsonData, setJsonData] = useState<string[]>([]);
-  const user = useAppSelector((state) => state.user?.value);
+  const email = useAppSelector((state) => state.user.value?.email);
 
   const handleFileOpen = async () => {
     openFile().then((data) => {
@@ -39,13 +39,17 @@ const Backup = () => {
   };
 
   const handleCloudOpen = async () => {
-    getConfig(user?.email).then((data) => {
-      if (data.length > 0) {
-        setJsonData(data);
-      } else {
-        errorDialog("No packages found in the cloud", "Error");
-      }
-    });
+    if (email) {
+      getCloudPackages(email).then((data) => {
+        if (data.length > 0) {
+          setJsonData(data);
+        } else {
+          errorDialog("No packages found in the cloud", "Error");
+        }
+      });
+    } else {
+      errorDialog("Sign in to access cloud", "Error");
+    }
   };
 
   return (
@@ -74,7 +78,7 @@ const Backup = () => {
               <DialogHeader>
                 <DialogTitle>Import config</DialogTitle>
                 <DialogDescription>
-                  You can import your config.json from ...
+                  {!email && "Sign in to access cloud"}
                 </DialogDescription>
                 <div className="flex justify-evenly items-center py-10">
                   <Button

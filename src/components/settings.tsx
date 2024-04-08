@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/app/hooks";
 import { Card, CardContent, CardDescription, CardTitle } from "./ui/card";
 import { Head } from "./ui/head";
 import { ScrollArea } from "./ui/scroll-area";
@@ -30,6 +31,8 @@ const SettingsCard = ({
 };
 
 const Settings = () => {
+  const settings = useAppSelector((state) => state.settings.value);
+
   return (
     <div className="flex flex-col items-start justify-start m-1 p-1 gap-5 w-full h-full">
       <Head title="Settings" />
@@ -38,9 +41,9 @@ const Settings = () => {
         <SettingsCard title="Accent color" desc="Choose your color theme">
           <Select>
             <SelectTrigger className="w-40">
-              <SelectValue placeholder="Yellow" />
+              <SelectValue placeholder={settings.accent} />
             </SelectTrigger>
-            <SelectContent defaultValue="yellow">
+            <SelectContent defaultValue={settings.accent}>
               <SelectItem value="yellow">Yellow</SelectItem>
               <SelectItem value="orange">Orange</SelectItem>
               <SelectItem value="green">Green</SelectItem>
@@ -53,11 +56,11 @@ const Settings = () => {
         <SettingsCard title="Auto fetch" desc="Check updates on startup">
           <Select>
             <SelectTrigger className="w-40">
-              <SelectValue placeholder="Yes" />
+              <SelectValue placeholder={settings.autoFetch} />
             </SelectTrigger>
-            <SelectContent defaultValue="yes">
-              <SelectItem value="yes">Yes</SelectItem>
-              <SelectItem value="no">No</SelectItem>
+            <SelectContent defaultValue={settings.autoFetch}>
+              <SelectItem value="off">off</SelectItem>
+              <SelectItem value="on">on</SelectItem>
             </SelectContent>
           </Select>
         </SettingsCard>
@@ -67,9 +70,9 @@ const Settings = () => {
         >
           <Select>
             <SelectTrigger className="w-40">
-              <SelectValue placeholder="Shutdown" />
+              <SelectValue placeholder={settings.power} />
             </SelectTrigger>
-            <SelectContent defaultValue="off">
+            <SelectContent defaultValue={settings.power}>
               <SelectItem value="off">Off</SelectItem>
               <SelectItem value="shutdown">Shutdown</SelectItem>
               <SelectItem value="reboot">Reboot</SelectItem>

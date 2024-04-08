@@ -19,7 +19,7 @@ export const shellCommands = async (
     dispatch(addLog(line.length > 8 ? line : ""));
     dispatch(setLock());
   });
-  command.stderr.on("data", (line) => console.log(`command stderr: "${line}"`));
+  // command.stderr.on("data", (line) => console.log(`command stderr: "${line}"`));
   await command.execute().then(() => setLock());
 };
 

@@ -1,8 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
 
-const initialState = {
-  value: {},
+type UserState = {
+  value: User | { email: string };
+};
+const initialState: UserState = {
+  value: { email: "" },
 };
 
 export const userSlice = createSlice({
