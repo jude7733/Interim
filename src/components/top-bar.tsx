@@ -28,13 +28,12 @@ const OptionMenu = () => {
   );
 };
 
-const TopBar = ({
-  hideLogin,
-  email,
-}: {
+type TopBarProps = {
   hideLogin: boolean;
   email: string;
-}) => {
+};
+
+const TopBar = ({ hideLogin, email }: TopBarProps) => {
   return (
     <div className="bg-accent flex p-1 justify-between items-center border-b-2 border-border">
       <div className="flex justify-start items-center">

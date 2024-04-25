@@ -10,15 +10,13 @@ import {
   SelectValue,
 } from "./ui/select";
 
-const SettingsCard = ({
-  children,
-  title,
-  desc,
-}: {
-  children: React.ReactNode;
+type SettingsCardProps = {
+  children: JSX.Element;
   title: string;
   desc: string;
-}) => {
+};
+
+const SettingsCard = ({ children, title, desc }: SettingsCardProps) => {
   return (
     <Card className="flex flex-col justify-between px-8 pt-6 mb-7 shadow-sm shadow-primary">
       <CardTitle>{title}</CardTitle>
