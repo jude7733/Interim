@@ -22,8 +22,8 @@ type SysPackageListProps = {
 const SysPackageList = ({ mode }: SysPackageListProps) => {
   const [packages, setPackages] = useState<string[]>([]);
   const [list, setList] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [showCloud, setShowCloud] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
+  const [showCloud, setShowCloud] = useState(true);
   const dispatch = useAppDispatch();
   const lock = useAppSelector((state) => state.lock.value);
   const updates = useAppSelector((state) => state.update.value);

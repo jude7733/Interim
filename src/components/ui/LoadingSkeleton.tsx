@@ -25,6 +25,18 @@ export const LoadingSkeleton = ({ variant }: LoadingSkeletonProps) => {
           </div>
         </div>
       )}
+      {variant === "update" && (
+        <div className="space-y-3">
+          <div className="flex justify-start w-full">
+            <Skeleton className="h-6 w-40 rounded-xl" />
+          </div>
+          <div className="space-y-3 w-min p-5">
+            <Skeleton className="h-5 w-72 rounded-xl" />
+            <Skeleton className="h-5 w-72 rounded-xl" />
+            <Skeleton className="h-5 w-72 rounded-xl" />
+          </div>
+        </div>
+      )}
     </>
   );
 };

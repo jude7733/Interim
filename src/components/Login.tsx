@@ -26,7 +26,8 @@ import { useToast } from "./ui/use-toast";
 export const Login = ({ skip }: { skip?: () => void }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [isLogin, setIsLogin] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
@@ -52,21 +53,23 @@ export const Login = ({ skip }: { skip?: () => void }) => {
       .then((userCredential) => {
         const user: User = userCredential.user;
         dispatch(addUser(user));
+      })
+      .then(() => {
         if (skip) {
           skip();
         }
-      })
-      .then(() =>
         toast({
           title: email,
           description: "Logged in successfully",
-        })
-      );
+        });
+      })
+      .catch((error) => alert(error.message));
   };
 
   const handleForgotPassword = async (email: string) => {
     try {
       await sendPasswordResetEmail(auth, email);
+      setDisabled(true);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "An error occurred.";
@@ -133,7 +136,10 @@ export const Login = ({ skip }: { skip?: () => void }) => {
             <DialogFooter>
               <Button
                 variant="outline"
-                onClick={() => handleForgotPassword(email)}
+                onClick={() => {
+                  handleForgotPassword(email);
+                }}
+                disabled={disabled}
               >
                 Send
               </Button>

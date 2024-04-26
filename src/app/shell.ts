@@ -3,9 +3,10 @@ import { setLock } from "@/features/lockSlice";
 import { Command } from "@tauri-apps/api/shell";
 import { packageManager, systemPackages } from "./constants";
 import { addUpdate } from "@/features/updateSlice";
+import { Dispatch } from "@reduxjs/toolkit";
 
 export const shellCommands = async (
-  dispatch: any,
+  dispatch: Dispatch,
   cmd: string,
   cmdArgs: string[]
 ) => {
@@ -23,7 +24,7 @@ export const shellCommands = async (
   await command.execute().then(() => setLock());
 };
 
-export const listUpdates = async (dispatch: any) => {
+export const listUpdates = async (dispatch: Dispatch) => {
   dispatch(setLock());
   const pkg: string[] = [];
   const command = new Command(packageManager, ["list", "--upgradable"]);
@@ -39,7 +40,7 @@ export const listUpdates = async (dispatch: any) => {
 };
 
 export const installPackages = async (
-  dispatch: any,
+  dispatch: Dispatch,
   pkg: string[],
   flag?: string
 ) => {

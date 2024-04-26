@@ -17,8 +17,9 @@ export async function openFile() {
   } else {
     try {
       let config = await readTextFile(selected as string);
-      config = JSON.parse(config);
-      return config[osType].map((pkg: { name: string }) => pkg.name);
+      return JSON.parse(config)[osType].map(
+        (pkg: { name: string }) => pkg.name
+      );
     } catch (error) {
       alert(error);
     }
