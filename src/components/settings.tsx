@@ -18,7 +18,7 @@ type SettingsCardProps = {
 
 const SettingsCard = ({ children, title, desc }: SettingsCardProps) => {
   return (
-    <Card className="flex flex-col justify-between px-8 pt-6 mb-7 shadow-sm shadow-primary">
+    <Card className="flex flex-col justify-between px-8 pt-6 mb-7 shadow-md shadow-primary">
       <CardTitle>{title}</CardTitle>
       <div className="flex mt-5 justify-between">
         <CardDescription>{desc}</CardDescription>
