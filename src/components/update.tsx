@@ -2,14 +2,16 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { Head } from "./ui/head";
 import { MonitorDown } from "lucide-react";
 import { BigButton } from "./ui/big-button";
-import { listUpdates, shellCommands } from "@/app/shell";
+import { shellCommands } from "@/app/shell";
 import { packageManager } from "@/app/constants";
 import SysPackageList from "./SysPackageList";
 import { useState } from "react";
+import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 
 const Update = () => {
   const dispatch = useAppDispatch();
-  const [checkedUpdates, setCheckedUpdates] = useState<boolean>(false);
+  const [checkedUpdates, setCheckedUpdates] = useState(false);
+  const [loading, setLoading] = useState(false);
   const updates = useAppSelector((state) => state.update.value);
 
   return (
@@ -18,19 +20,25 @@ const Update = () => {
       <div className="flex flex-col flex-wrap w-full h-full gap-10 justify-center items-center">
         {checkedUpdates || updates.length > 0 ? (
           <SysPackageList mode="update" />
+        ) : loading ? (
+          <LoadingSkeleton variant="update" />
         ) : (
           <BigButton
             text="Fetch updates"
             icon={<MonitorDown size={50} color="yellow" />}
-            onClick={() =>
-              !checkedUpdates &&
-              (packageManager === "winget"
-                ? listUpdates(dispatch).then(() => setCheckedUpdates(true))
-                : shellCommands(dispatch, "sudo", [
-                    packageManager,
-                    "update",
-                  ]).then(() => setCheckedUpdates(true)))
-            }
+            onClick={() => {
+              if (!checkedUpdates) {
+                //Linux
+                setLoading(true);
+                shellCommands(dispatch, "sudo", [
+                  packageManager,
+                  "update",
+                ]).then(() => {
+                  setCheckedUpdates(true);
+                  setLoading(false);
+                });
+              }
+            }}
           />
         )}
       </div>

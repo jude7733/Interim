@@ -1,4 +1,4 @@
-import Autoplay from "embla-carousel-autoplay";
+import AutoScroll from "embla-carousel-auto-scroll";
 import {
   Carousel,
   CarouselContent,
@@ -67,8 +67,10 @@ const CarouselComponent = () => {
         loop: true,
       }}
       plugins={[
-        Autoplay({
-          delay: 3000,
+        AutoScroll({
+          // StopOnInteraction: true,
+          // stopOnMouseEnter: true,
+          speed: 1,
         }),
       ]}
     >

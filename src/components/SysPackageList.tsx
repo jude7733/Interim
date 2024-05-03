@@ -8,18 +8,22 @@ import { CloudUpload, FileUp, RefreshCcw } from "lucide-react";
 import { DialogFooter, DialogHeader } from "./ui/dialog";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { Separator } from "./ui/separator";
-import { Skeleton } from "./ui/skeleton";
 import { osType, packageManager } from "@/app/constants";
 import { saveFile } from "@/app/dialog";
 import { shellCommands } from "@/app/shell";
 import { setConfig } from "@/app/firestore";
 import { toast } from "./ui/use-toast";
+import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 
-const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
+type SysPackageListProps = {
+  mode: "export" | "update";
+};
+
+const SysPackageList = ({ mode }: SysPackageListProps) => {
   const [packages, setPackages] = useState<string[]>([]);
   const [list, setList] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [showCloud, setShowCloud] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
+  const [showCloud, setShowCloud] = useState(true);
   const dispatch = useAppDispatch();
   const lock = useAppSelector((state) => state.lock.value);
   const updates = useAppSelector((state) => state.update.value);
@@ -54,25 +58,7 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
   return (
     <>
       {loading ? (
-        <div className="flex flex-col items-center gap-8 w-auto px-[19px] py-7">
-          <div className="flex justify-start w-full">
-            <Skeleton className="h-8 w-60 rounded-xl" />
-          </div>
-          <div className="space-y-3 w-min">
-            <Skeleton className="h-6 w-72 rounded-xl" />
-            <Skeleton className="h-6 w-72 rounded-xl" />
-            <Skeleton className="h-6 w-72 rounded-xl" />
-            <Skeleton className="h-6 w-72 rounded-xl" />
-            <Skeleton className="h-6 w-72 rounded-xl" />
-            <Skeleton className="h-6 w-72 rounded-xl" />
-            <Skeleton className="h-6 w-72 rounded-xl" />
-            <Skeleton className="h-6 w-72 rounded-xl" />
-          </div>
-          <div className="flex w-80 justify-end gap-4">
-            <Skeleton className="h-7 w-24" />
-            <Skeleton className="h-7 w-24" />
-          </div>
-        </div>
+        <LoadingSkeleton variant={mode} />
       ) : (
         <div
           className={`flex flex-col gap-5 py-5 px-3 ${

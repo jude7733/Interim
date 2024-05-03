@@ -10,17 +10,19 @@ import QButton from "./Qbutton";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { popQueue } from "@/features/queueSlice";
 
+interface ToggleGroupProps {
+  title: string;
+  pkg: string[];
+  setOpen?: boolean | ((value: boolean) => void);
+  checkBox?: boolean;
+}
+
 export const ToggleGroup = ({
   title,
   pkg,
   setOpen,
   checkBox,
-}: {
-  title: string;
-  pkg: string[];
-  setOpen?: boolean | ((value: boolean) => void);
-  checkBox?: boolean;
-}) => {
+}: ToggleGroupProps) => {
   const queue: string[] = useAppSelector((state) => state.queue.value);
   const [list, setList] = useState<string[]>(pkg);
   const [toggle, setToggle] = useState<boolean>(false);

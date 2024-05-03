@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
 
 type UserState = {
-  value: User | { email: string };
+  value: User | { readonly email: string };
 };
 const initialState: UserState = {
   value: { email: "" },
