@@ -12,14 +12,9 @@ import { osType, packageManager } from "@/app/constants";
 import { saveFile } from "@/app/dialog";
 import { shellCommands } from "@/app/shell";
 import { setConfig } from "@/app/firestore";
-import { toast } from "./ui/use-toast";
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
 
-type SysPackageListProps = {
-  mode: "export" | "update";
-};
-
-const SysPackageList = ({ mode }: SysPackageListProps) => {
+const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
   const [packages, setPackages] = useState<string[]>([]);
   const [list, setList] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +23,10 @@ const SysPackageList = ({ mode }: SysPackageListProps) => {
   const lock = useAppSelector((state) => state.lock.value);
   const updates = useAppSelector((state) => state.update.value);
   const user = useAppSelector((state) => state.user.value);
-  const settings = useAppSelector((state) => state.settings.value);
+  const config = {
+    [osType]: list.map((item) => ({ name: item })),
+    settings: useAppSelector((state) => state.settings.value),
+  };
 
   useEffect(() => {
     if (mode === "export") {
@@ -48,6 +46,27 @@ const SysPackageList = ({ mode }: SysPackageListProps) => {
       }
     }
   }, []);
+
+  const ExportButton = ({ mode }: { mode: "System" | "Cloud" }) => (
+    <Button
+      size="sm"
+      variant="secondary"
+      onClick={async () =>
+        mode == "System"
+          ? await saveFile(JSON.stringify(config))
+          : await setConfig((user as { email: string })?.email, config).then(
+              () => setShowCloud(false)
+            )
+      }
+    >
+      <Label className="text-primary mr-1">{mode} </Label>
+      {mode == "System" ? (
+        <FileUp color="yellow" />
+      ) : (
+        <CloudUpload color="yellow" />
+      )}
+    </Button>
+  );
 
   const handleCheck = (item: string) => {
     list.includes(item)
@@ -104,42 +123,8 @@ const SysPackageList = ({ mode }: SysPackageListProps) => {
           </ScrollArea>
           {mode === "export" ? (
             <DialogFooter className="flex gap-4">
-              <Button
-                size="sm"
-                variant="secondary"
-                onClick={() =>
-                  saveFile(
-                    JSON.stringify({
-                      [osType]: list.map((item) => ({ name: item })),
-                      settings: settings,
-                    })
-                  )
-                }
-              >
-                <Label className="text-primary mr-1">System </Label>
-                <FileUp color="yellow" />
-              </Button>
-              {showCloud && (
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  onClick={async () =>
-                    await setConfig((user as { email: string })?.email, {
-                      [osType]: list.map((item) => ({ name: item })),
-                      settings: settings,
-                    })
-                      .then(() =>
-                        toast({
-                          description: "Saved to cloud",
-                        })
-                      )
-                      .then(() => setShowCloud(false))
-                  }
-                >
-                  <Label className="text-primary mr-1">Cloud </Label>
-                  <CloudUpload color="yellow" />
-                </Button>
-              )}
+              <ExportButton mode="System" />
+              {showCloud && <ExportButton mode="Cloud" />}
             </DialogFooter>
           ) : (
             list.length > 0 && (

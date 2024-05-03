@@ -16,7 +16,7 @@ export async function openFile() {
     alert("No file selected");
   } else {
     try {
-      let config = await readTextFile(selected as string);
+      const config = await readTextFile(selected as string);
       return JSON.parse(config)[osType].map(
         (pkg: { name: string }) => pkg.name
       );
