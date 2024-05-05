@@ -9,6 +9,7 @@ import { Checkbox } from "./checkbox";
 import QButton from "./Qbutton";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { popQueue } from "@/features/queueSlice";
+import DetailsDrawer from "../DetailsDrawer";
 
 interface ToggleGroupProps {
   title: string;
@@ -58,7 +59,8 @@ export const ToggleGroup = ({
         {pkg.map((item: string, index: number) => (
           <div
             style={{ animationDelay: `${index * 100}ms` }}
-            className={`animate-fade-in-right flex items-center mx-1 justify-between pl-2 p-1 gap-8 mb-4 border rounded-xl shadow-primary ${
+            key={index}
+            className={`animate-fade-in-right flex items-center mx-1 justify-between pl-2 p-1 gap-10 mb-4 border rounded-xl shadow-primary ${
               list.includes(item)
                 ? checkBox
                   ? "shadow-sm"
@@ -66,30 +68,33 @@ export const ToggleGroup = ({
                 : "shadow-none"
             }`}
           >
-            <Label key={index}>{item}</Label>
-            {queue.includes(item) ? (
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => dispatch(popQueue(item))}
-              >
-                <Trash2 className="h-4 w-4" color="red" />
-              </Button>
-            ) : checkBox ? (
-              <Checkbox
-                onCheckedChange={() => handleClick(item)}
-                defaultChecked
-                className="h-5 w-5 m-2"
-              />
-            ) : (
-              <Toggle onPressedChange={() => handleClick(item)}>
-                {list.includes(item) ? (
-                  <Minus className="h-6 w-6" color="yellow" />
-                ) : (
-                  <Plus className="h-6 w-6" color="yellow" />
-                )}
-              </Toggle>
-            )}
+            <Label>{item}</Label>
+            <div className="flex justify-end">
+              <DetailsDrawer pkg={item} />
+              {queue.includes(item) ? (
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => dispatch(popQueue(item))}
+                >
+                  <Trash2 className="h-4 w-4" color="red" />
+                </Button>
+              ) : checkBox ? (
+                <Checkbox
+                  onCheckedChange={() => handleClick(item)}
+                  defaultChecked
+                  className="h-5 w-5 m-2"
+                />
+              ) : (
+                <Toggle onPressedChange={() => handleClick(item)}>
+                  {list.includes(item) ? (
+                    <Minus className="h-6 w-6" color="yellow" />
+                  ) : (
+                    <Plus className="h-6 w-6" color="yellow" />
+                  )}
+                </Toggle>
+              )}
+            </div>
           </div>
         ))}
       </ScrollArea>
