@@ -70,8 +70,58 @@ export const exportFromSystem = async () => {
   });
   await command.execute();
   data.shift();
-
   return data.filter(
     (item) => !systemPackages.some((pkg: string) => item.includes(pkg))
   );
+};
+
+export type PackageDetails = {
+  Description: string;
+  Version: string;
+  Origin: string;
+  Maintainer: string;
+  DownloadSize: string;
+  InstalledSize: string;
+  Homepage: string;
+  Section: string;
+  Provides: string;
+  Info: string;
+};
+
+export const getPackageDetails = async (pkg: string) => {
+  const details: string[] = [];
+  const obj: PackageDetails | Record<string, string> = {};
+  const command = new Command(packageManager, ["show", pkg]);
+  command.on("error", (error) => console.error(`command error: "${error}"`));
+  command.stdout.on("data", (line) => {
+    details.push(line);
+  });
+  await command.execute();
+
+  details.map((line) => {
+    if (line.includes(":")) {
+      const [keys, ...value] = line.split(":");
+      const key = keys.trim().replace("-", "");
+      const val = value.join(":").trim();
+      if (obj[key]) {
+        obj[key] += "\n" + val;
+      } else {
+        obj[key] = val;
+      }
+    } else {
+      obj["Info"] ? (obj["Info"] += "\n" + line) : (obj["Info"] = line);
+    }
+  });
+  return obj;
+};
+
+export const searchPackage = async (pkg: string) => {
+  const data: string[] = [];
+  const command = new Command(packageManager, ["search", pkg]);
+  command.on("error", (error) => console.error(`command error: "${error}"`));
+  command.stdout.on("data", (line) => {
+    data.push(line);
+  });
+  await command.execute();
+  return data;
 };
