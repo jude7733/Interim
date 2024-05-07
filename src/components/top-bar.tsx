@@ -2,31 +2,13 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "./ui/button";
 import { os } from "@/app/constants";
 import { Badge } from "./ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Label } from "./ui/label";
 import InstallButton from "./ui/InstallButton";
 import { Login } from "./Login";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
-
-const OptionMenu = () => {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button variant="secondary">Options</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Settings</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
+import { OptionMenu } from "./OptionMenu";
+import { SearchBar } from "./SearchBar";
 
 type TopBarProps = {
   hideLogin: boolean;
@@ -57,6 +39,7 @@ const TopBar = ({ hideLogin, email }: TopBarProps) => {
           ))}
       </div>
       <div className="flex items-center gap-5">
+        <SearchBar />
         <InstallButton />
         <Badge variant="outline">
           <Label className="font-semibold">{os}</Label>
