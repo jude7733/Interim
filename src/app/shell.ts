@@ -20,7 +20,7 @@ export const shellCommands = async (
     dispatch(addLog(line.length > 8 ? line : ""));
     dispatch(setLock());
   });
-  // command.stderr.on("data", (line) => console.log(`command stderr: "${line}"`));
+  command.stderr.on("data", (line) => console.log(`command stderr: "${line}"`));
   await command.execute().then(() => setLock());
 };
 
@@ -115,57 +115,44 @@ export const getPackageDetails = async (pkg: string) => {
   return obj;
 };
 
-export type PackageResult = {
+export type SearchResult = {
   name: string;
-  installed: string | boolean;
-  candidate: string;
-  versionTable: {
-    version: string;
-    priority: number;
-    sources: string[];
-  }[];
+  source: string;
+  version: string;
+  architecture: string;
+  installed: boolean;
+  description: string;
 };
 
 export const searchPackage = async (pkg: string) => {
-  const data: string[] = [];
-  const command = new Command(packageManager, ["policy", pkg]);
+  const output: string[] = [];
+  const command = new Command(packageManager, ["search", "-n", pkg]);
   command.on("error", (error) => console.error(`command error: "${error}"`));
   command.stdout.on("data", (line) => {
-    data.push(line);
+    output.push(line);
   });
   await command.execute();
 
-  if (data.length < 2) {
-    return {
-      name: pkg,
-      installed: false,
-      candidate: "Not found",
-      versionTable: [],
-    };
+  const packages: SearchResult[] = [];
+  output.splice(0, 2);
+  if (output.length === 0) {
+    return null;
   }
 
-  const name = data[0].slice(0, -1);
-  let installed: string | boolean = data[1].split(": ")[1];
-  const candidate = data[2].split(": ")[1];
-  const versionTableLines = data.slice(3);
-  const versionTable: PackageResult["versionTable"] = [];
+  for (let i = 0; i < output.length; i = i + 3) {
+    const [full, version, architecture, status] = output[i].split(" ");
+    const [name, source] = full.split("/");
+    const description = output[i + 1].trim();
 
-  installed === "none" ? (installed = false) : installed;
-
-  for (let i = 0; i < versionTableLines.length; i += 3) {
-    const version = versionTableLines[i].trim().split(" ")[0];
-    const priority = Number(versionTableLines[i].trim().split(" ")[1]);
-    const sources = [
-      versionTableLines[i + 1].trim(),
-      versionTableLines[i + 2].trim(),
-    ];
-    versionTable.push({ version, priority, sources });
+    packages.push({
+      name,
+      source,
+      version,
+      architecture,
+      installed: status === "[installed]\n" ? true : false,
+      description,
+    });
   }
 
-  return {
-    name,
-    installed,
-    candidate,
-    versionTable,
-  };
+  return packages;
 };

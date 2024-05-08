@@ -8,7 +8,6 @@ import InstallButton from "./ui/InstallButton";
 import { Login } from "./Login";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { OptionMenu } from "./OptionMenu";
-import { SearchBar } from "./SearchBar";
 
 type TopBarProps = {
   hideLogin: boolean;
@@ -39,7 +38,6 @@ const TopBar = ({ hideLogin, email }: TopBarProps) => {
           ))}
       </div>
       <div className="flex items-center gap-5">
-        <SearchBar />
         <InstallButton />
         <Badge variant="outline">
           <Label className="font-semibold">{os}</Label>
