@@ -59,7 +59,7 @@ const SearchMenu = () => {
           className="border-2"
         />
       </div>
-      <Table className="m-5 w-auto">
+      <Table className="m-5 w-[95%]">
         <TableCaption>
           {value.length < 2
             ? "Type any package name to search"
@@ -69,7 +69,7 @@ const SearchMenu = () => {
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>Version</TableHead>
-            <TableHead>Architecture</TableHead>
+            <TableHead>Arch</TableHead>
             <TableHead>Source</TableHead>
             <TableHead>Installed</TableHead>
             <TableHead>Description</TableHead>
@@ -78,11 +78,6 @@ const SearchMenu = () => {
         <TableBody>
           {loading ? (
             <>
-              <LoadingSkeleton variant="search" />
-              <LoadingSkeleton variant="search" />
-              <LoadingSkeleton variant="search" />
-              <LoadingSkeleton variant="search" />
-              <LoadingSkeleton variant="search" />
               <LoadingSkeleton variant="search" />
             </>
           ) : (

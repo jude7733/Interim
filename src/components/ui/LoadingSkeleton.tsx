@@ -1,6 +1,27 @@
 import { Skeleton } from "./skeleton";
+import { TableCell, TableRow } from "./table";
 
-type LoadingSkeletonProps = { variant: string };
+const TableRowSkeleton = () => {
+  const TableCellSkeleton = () => (
+    <TableCell>
+      <Skeleton className="h-6 w-full" />
+    </TableCell>
+  );
+  return (
+    <TableRow>
+      <TableCellSkeleton />
+      <TableCellSkeleton />
+      <TableCellSkeleton />
+      <TableCellSkeleton />
+      <TableCellSkeleton />
+      <TableCellSkeleton />
+    </TableRow>
+  );
+};
+
+type LoadingSkeletonProps = {
+  variant: "export" | "update" | "search" | "details";
+};
 export const LoadingSkeleton = ({ variant }: LoadingSkeletonProps) => {
   return (
     <>
@@ -36,6 +57,17 @@ export const LoadingSkeleton = ({ variant }: LoadingSkeletonProps) => {
             <Skeleton className="h-5 w-72 rounded-xl" />
           </div>
         </div>
+      )}
+      {variant === "search" && (
+        <>
+          <TableRowSkeleton />
+          <TableRowSkeleton />
+          <TableRowSkeleton />
+          <TableRowSkeleton />
+          <TableRowSkeleton />
+          <TableRowSkeleton />
+          <TableRowSkeleton />
+        </>
       )}
     </>
   );
