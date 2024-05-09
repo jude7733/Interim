@@ -69,6 +69,24 @@ export const LoadingSkeleton = ({ variant }: LoadingSkeletonProps) => {
           <TableRowSkeleton />
         </>
       )}
+      {variant === "details" && (
+        <>
+          <div className="p-10 px-[15%] flex justify-between">
+            <div className="flex flex-col">
+              <Skeleton className="h-7 w-40 rounded-xl" />
+              <Skeleton className="h-7 w-80 rounded-xl" />
+            </div>
+            <Skeleton className="w-10 h-10 rounded-full" />
+          </div>
+          <div className="mx-[15%] border-t border-t-primary rounded-lg">
+            <Skeleton className="w-full h-96" />
+          </div>
+          <div className="py-10 mr-[14%] flex justify-end gap-3">
+            <Skeleton className="w-16 h-8" />
+            <Skeleton className="w-16 h-8" />
+          </div>
+        </>
+      )}
     </>
   );
 };

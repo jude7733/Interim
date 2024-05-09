@@ -53,7 +53,7 @@ const DetailsDrawer = ({ pkg }: { pkg: string }) => {
       </DrawerTrigger>
       <DrawerContent>
         {loading ? (
-          <LoadingSkeleton variant="update" />
+          <LoadingSkeleton variant="details" />
         ) : (
           <>
             <DrawerHeader className="p-10 px-[15%]">
@@ -76,7 +76,7 @@ const DetailsDrawer = ({ pkg }: { pkg: string }) => {
                   <li key={index} className="flex justify-between gap-14">
                     <span>
                       {item.value && item.name}
-                      {item.value && <>:</>}
+                      {item.value && ":"}
                     </span>
                     <span>{item.value}</span>
                   </li>
