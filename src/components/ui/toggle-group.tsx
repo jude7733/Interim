@@ -1,4 +1,4 @@
-import { Minus, Plus, Trash2, X } from "lucide-react";
+import { Info, Minus, Plus, Trash2, X } from "lucide-react";
 import { Label } from "./label";
 import { Toggle } from "./toggle";
 import { Button } from "./button";
@@ -70,7 +70,7 @@ export const ToggleGroup = ({
           >
             <Label>{item}</Label>
             <div className="flex justify-end">
-              <DetailsDrawer pkg={item} />
+              <DetailsDrawer pkg={item} trigger={<Info color="yellow" />} />
               {queue.includes(item) ? (
                 <Button
                   variant="outline"

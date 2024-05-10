@@ -86,6 +86,7 @@ export type PackageDetails = {
   Section: string;
   Provides: string;
   Info: string;
+  Recommends: string[] | null;
 };
 
 export const getPackageDetails = async (pkg: string) => {
@@ -112,6 +113,7 @@ export const getPackageDetails = async (pkg: string) => {
       obj["Info"] ? (obj["Info"] += "\n" + line) : (obj["Info"] = line);
     }
   });
+  obj.Recommends = obj["Recommends"]?.split(", ").slice(0, 4) ?? [];
   return obj;
 };
 
