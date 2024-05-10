@@ -12,7 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import { Search } from "lucide-react";
+import { Check, Library, Search } from "lucide-react";
+import DetailsDrawer from "./DetailsDrawer";
 
 const SearchMenu = () => {
   const [value, setValue] = useState("");
@@ -46,10 +47,10 @@ const SearchMenu = () => {
   }, [value]);
 
   return (
-    <div className="flex flex-col items-start justify-start m-1 p-1 w-full h-full gap-2">
+    <div className="flex flex-col items-start justify-start m-1 p-1 w-full h-full gap-3">
       <Head title="Search" />
       <div className="flex justify-center items-center w-1/3 mx-5 gap-2">
-        <Search />
+        <Search strokeWidth={4} color="yellow" />
         <Input
           placeholder="Search packages..."
           value={value}
@@ -77,21 +78,27 @@ const SearchMenu = () => {
         </TableHeader>
         <TableBody>
           {loading ? (
-            <>
-              <LoadingSkeleton variant="search" />
-            </>
+            <LoadingSkeleton variant="search" />
           ) : (
             result?.map((result) => (
               <TableRow
                 key={result?.name}
                 className="hover:bg-secondary cursor-pointer"
               >
-                <TableCell>{result?.name}</TableCell>
+                <TableCell className="font-semibold">{result?.name}</TableCell>
                 <TableCell>{result?.version}</TableCell>
                 <TableCell>{result?.architecture}</TableCell>
                 <TableCell>{result?.source}</TableCell>
-                <TableCell>{result?.installed ? "Yes" : "No"}</TableCell>
+                <TableCell>
+                  {result?.installed ? <Check color="yellow" /> : "No"}
+                </TableCell>
                 <TableCell>{result?.description}</TableCell>
+                <TableCell>
+                  <DetailsDrawer
+                    pkg={result?.name}
+                    trigger={<Library color="yellow" />}
+                  />
+                </TableCell>
               </TableRow>
             ))
           )}

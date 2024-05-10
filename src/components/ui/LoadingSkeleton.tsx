@@ -15,6 +15,7 @@ const TableRowSkeleton = () => {
       <TableCellSkeleton />
       <TableCellSkeleton />
       <TableCellSkeleton />
+      <TableCellSkeleton />
     </TableRow>
   );
 };
