@@ -5,7 +5,6 @@ import {
   DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -16,17 +15,23 @@ import { getPackageDetails, PackageDetails } from "@/app/shell";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Label } from "./ui/label";
 import { Card } from "./ui/card";
+import QButton from "./ui/Qbutton";
 
-const DetailsDrawer = ({ pkg }: { pkg: string }) => {
+type DetailsDrawerProps = {
+  pkg: string;
+  trigger: JSX.Element;
+};
+const DetailsDrawer = ({ pkg, trigger }: DetailsDrawerProps) => {
   const [details, setDetails] = useState<PackageDetails | null>(null);
   const [loading, setLoading] = useState(true);
 
   const handleFetch = async () => {
     await getPackageDetails(pkg).then((data) => {
-      setDetails(data as PackageDetails);
+      setDetails(data as unknown as PackageDetails);
       setLoading(false);
     });
   };
+
   const detailsList = [
     { name: "Version", value: details?.Version },
     { name: "Origin", value: details?.Origin },
@@ -47,13 +52,13 @@ const DetailsDrawer = ({ pkg }: { pkg: string }) => {
   return (
     <Drawer>
       <DrawerTrigger>
-        <Button variant="outline" size="icon" onClick={handleFetch}>
-          <Info color="yellow" />
+        <Button variant="outline" onClick={handleFetch}>
+          {trigger}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         {loading ? (
-          <LoadingSkeleton variant="update" />
+          <LoadingSkeleton variant="details" />
         ) : (
           <>
             <DrawerHeader className="p-10 px-[15%]">
@@ -71,24 +76,39 @@ const DetailsDrawer = ({ pkg }: { pkg: string }) => {
               </DrawerDescription>
             </DrawerHeader>
             <Card className="mx-[15%] border-t border-t-primary rounded-lg">
-              <ul className="p-[5%] flex flex-col gap-4">
+              <ul className="p-[4%] flex flex-col gap-4">
                 {detailsList.map((item, index) => (
                   <li key={index} className="flex justify-between gap-14">
                     <span>
                       {item.value && item.name}
-                      {item.value && <>:</>}
+                      {item.value && ":"}
                     </span>
                     <span>{item.value}</span>
                   </li>
                 ))}
               </ul>
             </Card>
-            <DrawerFooter className="py-10 mr-[14%]">
-              <DrawerClose className="flex justify-end gap-3">
-                <Button>Add</Button>
-                <Button variant="secondary">close</Button>
-              </DrawerClose>
-            </DrawerFooter>
+            <div className="py-5 mx-[14%] flex justify-between">
+              <div className="flex flex-col items-start gap-3 w-3/4">
+                <Label>Recommends:</Label>
+                <div className="flex flex-wrap">
+                  {details?.Recommends?.length === 0 && "No recommendations"}
+                  {details?.Recommends?.map((item, index) => (
+                    <DetailsDrawer
+                      key={index}
+                      pkg={item}
+                      trigger={<Label>{item}</Label>}
+                    />
+                  ))}
+                </div>
+              </div>
+              <div className="space-x-3 w-fit">
+                <QButton queue={[pkg]} varient="individual" />
+                <DrawerClose>
+                  <Button variant="secondary">close</Button>
+                </DrawerClose>
+              </div>
+            </div>
           </>
         )}
       </DrawerContent>

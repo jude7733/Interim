@@ -20,7 +20,7 @@ export const shellCommands = async (
     dispatch(addLog(line.length > 8 ? line : ""));
     dispatch(setLock());
   });
-  // command.stderr.on("data", (line) => console.log(`command stderr: "${line}"`));
+  command.stderr.on("data", (line) => console.log(`command stderr: "${line}"`));
   await command.execute().then(() => setLock());
 };
 
@@ -86,6 +86,7 @@ export type PackageDetails = {
   Section: string;
   Provides: string;
   Info: string;
+  Recommends: string[] | null;
 };
 
 export const getPackageDetails = async (pkg: string) => {
@@ -112,16 +113,48 @@ export const getPackageDetails = async (pkg: string) => {
       obj["Info"] ? (obj["Info"] += "\n" + line) : (obj["Info"] = line);
     }
   });
+  obj.Recommends = obj["Recommends"]?.split(", ").slice(0, 4) ?? [];
   return obj;
 };
 
+export type SearchResult = {
+  name: string;
+  source: string;
+  version: string;
+  architecture: string;
+  installed: boolean;
+  description: string;
+};
+
 export const searchPackage = async (pkg: string) => {
-  const data: string[] = [];
-  const command = new Command(packageManager, ["search", pkg]);
+  const output: string[] = [];
+  const command = new Command(packageManager, ["search", "-n", pkg]);
   command.on("error", (error) => console.error(`command error: "${error}"`));
   command.stdout.on("data", (line) => {
-    data.push(line);
+    output.push(line);
   });
   await command.execute();
-  return data;
+
+  const packages: SearchResult[] = [];
+  output.splice(0, 2);
+  if (output.length === 0) {
+    return null;
+  }
+
+  for (let i = 0; i < output.length; i = i + 3) {
+    const [full, version, architecture, status] = output[i].split(" ");
+    const [name, source] = full.split("/");
+    const description = output[i + 1].trim();
+
+    packages.push({
+      name,
+      source,
+      version,
+      architecture,
+      installed: status === "[installed]\n" ? true : false,
+      description,
+    });
+  }
+
+  return packages;
 };

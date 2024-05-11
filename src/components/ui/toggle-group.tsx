@@ -1,4 +1,4 @@
-import { Minus, Plus, Trash2, X } from "lucide-react";
+import { Info, Minus, Plus, X } from "lucide-react";
 import { Label } from "./label";
 import { Toggle } from "./toggle";
 import { Button } from "./button";
@@ -7,8 +7,7 @@ import { Separator } from "./separator";
 import { ScrollArea } from "./scroll-area";
 import { Checkbox } from "./checkbox";
 import QButton from "./Qbutton";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { popQueue } from "@/features/queueSlice";
+import { useAppSelector } from "@/app/hooks";
 import DetailsDrawer from "../DetailsDrawer";
 
 interface ToggleGroupProps {
@@ -27,7 +26,6 @@ export const ToggleGroup = ({
   const queue: string[] = useAppSelector((state) => state.queue.value);
   const [list, setList] = useState<string[]>(pkg);
   const [toggle, setToggle] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
 
   useEffect(
     () => setList(pkg.filter((item) => !queue.includes(item))),
@@ -70,15 +68,9 @@ export const ToggleGroup = ({
           >
             <Label>{item}</Label>
             <div className="flex justify-end">
-              <DetailsDrawer pkg={item} />
+              <DetailsDrawer pkg={item} trigger={<Info color="yellow" />} />
               {queue.includes(item) ? (
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => dispatch(popQueue(item))}
-                >
-                  <Trash2 className="h-4 w-4" color="red" />
-                </Button>
+                <QButton queue={[item]} manager="default" varient="icon" />
               ) : checkBox ? (
                 <Checkbox
                   onCheckedChange={() => handleClick(item)}
@@ -99,7 +91,13 @@ export const ToggleGroup = ({
         ))}
       </ScrollArea>
       <Separator orientation="horizontal" color="yellow" />
-      {list.length > 0 && <QButton queue={list} />}
+      {list.length > 0 && (
+        <QButton
+          queue={list}
+          manager={title === "Pip" ? "pip" : "default"}
+          varient="list"
+        />
+      )}
     </div>
   );
 };

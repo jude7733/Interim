@@ -17,6 +17,7 @@ import Categories from "./components/categories";
 import Update from "./components/update";
 import Settings from "./components/settings";
 import { Terminal } from "./components/terminal";
+import SearchMenu from "./components/SearchMenu";
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
@@ -48,6 +49,9 @@ function App() {
               <TabsTrigger value="categories">Categories</TabsTrigger>
             </TabsList>
             <TabsList>
+              <TabsTrigger value="search">Search</TabsTrigger>
+            </TabsList>
+            <TabsList>
               <TabsTrigger value="update">Update</TabsTrigger>
             </TabsList>
             <TabsList>
@@ -66,6 +70,9 @@ function App() {
                 </TabsContent>
                 <TabsContent value="categories" className="grow">
                   <Categories />
+                </TabsContent>
+                <TabsContent value="search" className="grow">
+                  <SearchMenu />
                 </TabsContent>
                 <TabsContent value="update" className="grow">
                   <Update />

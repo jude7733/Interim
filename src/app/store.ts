@@ -3,6 +3,7 @@ import logReducer from "../features/logSlice";
 import lockReducer from "../features/lockSlice";
 import updateReducer from "../features/updateSlice";
 import queueReducer from "../features/queueSlice";
+import pipQueueReducer from "../features/pipQueueSlice";
 import userReducer from "../features/userSlice";
 import settingsReducer from "../features/settingsSlice";
 
@@ -12,6 +13,7 @@ export const store = configureStore({
     lock: lockReducer,
     update: updateReducer,
     queue: queueReducer,
+    pip: pipQueueReducer,
     user: userReducer,
     settings: settingsReducer,
   },
