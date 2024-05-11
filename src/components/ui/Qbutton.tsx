@@ -1,7 +1,6 @@
 import { Button } from "./button";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { addQueue, popQueue } from "@/features/queueSlice";
-import { Label } from "./label";
 import { addPipQueue, popPipQueue } from "@/features/pipQueueSlice";
 import { Trash2 } from "lucide-react";
 
@@ -15,9 +14,6 @@ const QButton = ({ queue, manager = "default", varient }: QButtonProps) => {
   const includes = queueList?.includes(queue[0]);
   const dispatch = useAppDispatch();
 
-  const handleQueue = () => {
-    includes ? dispatch(popQueue(queue[0])) : dispatch(addQueue(queue));
-  };
   const handlePopQueue = () =>
     manager === "default"
       ? dispatch(popQueue(queue[0]))
@@ -27,7 +23,9 @@ const QButton = ({ queue, manager = "default", varient }: QButtonProps) => {
     <>
       {varient === "individual" && (
         <Button
-          onClick={handleQueue}
+          onClick={() =>
+            includes ? dispatch(popQueue(queue[0])) : dispatch(addQueue(queue))
+          }
           variant={includes ? "destructive" : "default"}
         >
           {includes ? "Remove" : "Add"}
@@ -48,7 +46,7 @@ const QButton = ({ queue, manager = "default", varient }: QButtonProps) => {
               : dispatch(addPipQueue(queue))
           }
         >
-          <Label>Add to queue</Label>
+          Add to queue
         </Button>
       )}
     </>
