@@ -13,18 +13,25 @@ import { saveFile } from "@/app/dialog";
 import { shellCommands } from "@/app/shell";
 import { setConfig } from "@/app/firestore";
 import { LoadingSkeleton } from "./ui/LoadingSkeleton";
+import { Switch } from "./ui/switch";
+import { toast } from "./ui/use-toast";
 
 const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
   const [packages, setPackages] = useState<string[]>([]);
   const [list, setList] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCloud, setShowCloud] = useState(true);
+  const [includeQueue, setIncludeQueue] = useState(false);
   const dispatch = useAppDispatch();
   const lock = useAppSelector((state) => state.lock.value);
   const updates = useAppSelector((state) => state.update.value);
   const user = useAppSelector((state) => state.user.value);
+  const queue = useAppSelector((state) => state.queue.value);
+
   const config = {
-    [osType]: list.map((item) => ({ name: item })),
+    [osType]: includeQueue
+      ? [...new Set([...list, ...queue])].map((item) => ({ name: item }))
+      : list.map((item) => ({ name: item })),
     settings: useAppSelector((state) => state.settings.value),
   };
 
@@ -47,16 +54,30 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
     }
   }, []);
 
+  const handleCheck = (item: string) => {
+    list.includes(item)
+      ? setList(list.filter((i) => i !== item))
+      : setList([...list, item]);
+  };
+
   const ExportButton = ({ mode }: { mode: "System" | "Cloud" }) => (
     <Button
       size="sm"
       variant="secondary"
       onClick={async () =>
         mode == "System"
-          ? await saveFile(JSON.stringify(config))
-          : await setConfig((user as { email: string })?.email, config).then(
-              () => setShowCloud(false)
+          ? await saveFile(JSON.stringify(config)).then(() =>
+              toast({
+                description: "Successfully created a backup file",
+              })
             )
+          : await setConfig((user as { email: string })?.email, config)
+              .then(() => setShowCloud(false))
+              .finally(() =>
+                toast({
+                  description: "Successfully saved to cloud",
+                })
+              )
       }
     >
       <Label className="text-primary mr-1">{mode} </Label>
@@ -67,12 +88,6 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
       )}
     </Button>
   );
-
-  const handleCheck = (item: string) => {
-    list.includes(item)
-      ? setList(list.filter((i) => i !== item))
-      : setList([...list, item]);
-  };
 
   return (
     <>
@@ -122,9 +137,17 @@ const SysPackageList = ({ mode }: { mode: "export" | "update" }) => {
             ))}
           </ScrollArea>
           {mode === "export" ? (
-            <DialogFooter className="flex gap-4">
+            <DialogFooter className="flex flex-wrap gap-4">
               <ExportButton mode="System" />
               {showCloud && <ExportButton mode="Cloud" />}
+              <div className="space-x-3">
+                <Label htmlFor="queue">Include current queue items:</Label>
+                <Switch
+                  id="queue"
+                  checked={includeQueue}
+                  onCheckedChange={setIncludeQueue}
+                />
+              </div>
             </DialogFooter>
           ) : (
             list.length > 0 && (
