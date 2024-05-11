@@ -15,8 +15,7 @@ import { getPackageDetails, PackageDetails } from "@/app/shell";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Label } from "./ui/label";
 import { Card } from "./ui/card";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { addQueue, popQueue } from "@/features/queueSlice";
+import QButton from "./ui/Qbutton";
 
 type DetailsDrawerProps = {
   pkg: string;
@@ -25,18 +24,12 @@ type DetailsDrawerProps = {
 const DetailsDrawer = ({ pkg, trigger }: DetailsDrawerProps) => {
   const [details, setDetails] = useState<PackageDetails | null>(null);
   const [loading, setLoading] = useState(true);
-  const queue: string[] = useAppSelector((state) => state.queue.value);
-  const dispatch = useAppDispatch();
 
   const handleFetch = async () => {
     await getPackageDetails(pkg).then((data) => {
       setDetails(data as unknown as PackageDetails);
       setLoading(false);
     });
-  };
-
-  const handleQueue = () => {
-    queue?.includes(pkg) ? dispatch(popQueue(pkg)) : dispatch(addQueue([pkg]));
   };
 
   const detailsList = [
@@ -110,12 +103,7 @@ const DetailsDrawer = ({ pkg, trigger }: DetailsDrawerProps) => {
                 </div>
               </div>
               <div className="space-x-3 w-fit">
-                <Button
-                  onClick={handleQueue}
-                  variant={queue?.includes(pkg) ? "destructive" : "default"}
-                >
-                  {queue?.includes(pkg) ? "Remove" : "Add"}
-                </Button>
+                <QButton queue={[pkg]} varient="individual" />
                 <DrawerClose>
                   <Button variant="secondary">close</Button>
                 </DrawerClose>
