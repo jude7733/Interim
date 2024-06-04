@@ -1,5 +1,4 @@
 import { ModeToggle } from "@/components/mode-toggle";
-import { Button } from "./ui/button";
 import { os } from "@/app/constants";
 import { Badge } from "./ui/badge";
 import { Avatar, AvatarImage } from "./ui/avatar";
@@ -8,6 +7,12 @@ import InstallButton from "./ui/InstallButton";
 import { Login } from "./Login";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { OptionMenu } from "./OptionMenu";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import { auth } from "@/app/firebase";
+import { useToast } from "./ui/use-toast";
+import { Button } from "./ui/button";
+import { useAppDispatch } from "@/app/hooks";
+import { removeUser } from "@/features/userSlice";
 
 type TopBarProps = {
   hideLogin: boolean;
@@ -15,6 +20,19 @@ type TopBarProps = {
 };
 
 const TopBar = ({ hideLogin, email }: TopBarProps) => {
+  const dispatch = useAppDispatch();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+  await auth.signOut()
+      .then(() => dispatch(removeUser()))
+      .finally(() => (
+      toast({
+        description: "Logged out successfully",
+      })
+    ))
+};
+
   return (
     <div className="bg-accent flex p-1 justify-between items-center border-b-2 border-border">
       <div className="flex justify-start items-center">
@@ -23,9 +41,18 @@ const TopBar = ({ hideLogin, email }: TopBarProps) => {
         </Avatar>
         {!hideLogin &&
           (email ? (
-            <Badge variant="secondary" className="font-normal text-sm">
-              {email}
-            </Badge>
+            <HoverCard>
+              <HoverCardTrigger>
+                <Badge variant="secondary" className="font-normal text-sm">
+                  {email}
+                </Badge>
+              </HoverCardTrigger>
+              <HoverCardContent>
+                <div className="p-4">
+                  <Button variant="secondary" onClick={handleLogout}>Logout</Button>
+                </div>
+              </HoverCardContent>
+            </HoverCard>
           ) : (
             <Dialog>
               <DialogTrigger>
