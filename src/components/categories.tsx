@@ -38,6 +38,24 @@ const CategoryCard = ({ title, pkg }: { title: string; pkg: string[] }) => {
 };
 
 const Categories = () => {
+  const categories = [
+    { Python: ["python3", "python3-pip"] },
+    { Java: ["default-jdk", "default-jre"] },
+    { Rust: ["rustc"] },
+    { Go: ["golang-go"] },
+    { Ruby: ["ruby-full"] },
+    { Node: ["nodejs", "npm"] },
+    { CPlusPlus: ["g++"] },
+    { R: ["r-base"] },
+    { PHP: ["php"] },
+    { Lua: ["lua5.3"] },
+    { Perl: ["perl"] },
+    { MySQL: ["mysql-server"] },
+    { MongoDB: ["mongodb-org"] },
+    { SQLite: ["sqlite3"] },
+    { Dart: ["dart"] },
+  ];
+
   return (
     <ScrollArea className="w-full h-full flex flex-col items-center justify-center p-2 gap-10">
       <Head title="Categories" />
@@ -45,21 +63,13 @@ const Categories = () => {
         <CarouselComponent />
       </div>
       <div className="flex flex-wrap items-center justify-center gap-7 my-5 sm:px-10 md:px-14 lg:px-20">
-        <CategoryCard title="Python" pkg={["python3", "python3-pip"]} />
-        <CategoryCard title="Java" pkg={["default-jdk", "default-jre"]} />
-        <CategoryCard title="Rust" pkg={["rustc"]} />
-        <CategoryCard title="Go" pkg={["golang-go"]} />
-        <CategoryCard title="Ruby" pkg={["ruby-full"]} />
-        <CategoryCard title="Node" pkg={["nodejs", "npm"]} />
-        <CategoryCard title="C++" pkg={["g++"]} />
-        <CategoryCard title="R" pkg={["r-base"]} />
-        <CategoryCard title="PHP" pkg={["php"]} />
-        <CategoryCard title="Lua" pkg={["lua5.3"]} />
-        <CategoryCard title="Perl" pkg={["perl"]} />
-        <CategoryCard title="MySQL" pkg={["mysql-server"]} />
-        <CategoryCard title="MongoDB" pkg={["mongodb-org"]} />
-        <CategoryCard title="SQLite" pkg={["sqlite3"]} />
-        <CategoryCard title="Dart" pkg={["dart"]} />
+        {categories.map((category, index) => (
+          <CategoryCard
+            key={index}
+            title={Object.keys(category)[0]}
+            pkg={Object.values(category)[0]}
+          />
+        ))}
       </div>
     </ScrollArea>
   );
